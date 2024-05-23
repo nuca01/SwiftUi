@@ -60,13 +60,19 @@ struct ContentView: View {
     }
     
     //MARK: - Reload Button
-    @State private var buttonBackgroundColor: Color = Color.blue
+    @State private var buttonBackgroundColor: Color = Color(
+        red: 0.424,
+        green: 0.784,
+        blue: 0.992
+    )
     
     private var reloadButton: some View {
         Button(action: {
             buttonBackgroundColor = Color.purple
         }) {
-            Image(systemName: "arrow.clockwise")
+            Image("reload")
+                .resizable()
+                .frame(width: 18, height: 16)
                 .foregroundColor(.white)
                 .padding()
                 .background(buttonBackgroundColor)
@@ -124,7 +130,11 @@ struct ContentView: View {
                 title: "ცეცხლოვანი სიახლეები",
                 iconName: "person",
                 backgroundName: "voiceBackground",
-                backgroundColor: Color(red: 0.498, green: 0.212, blue: 0.969),
+                backgroundColor: Color(
+                    red: 0.498,
+                    green: 0.212,
+                    blue: 0.969
+                ),
                 height: 110,
                 card: card
             )
@@ -170,7 +180,12 @@ struct ContentView: View {
                     Spacer()
                 }
             }
-            .padding(EdgeInsets(top: 15, leading: 11, bottom: 10, trailing: 40))
+            .padding(EdgeInsets(
+                top: 15,
+                leading: 11,
+                bottom: 10,
+                trailing: 40
+            ))
         }
         .frame(width: 165, height: height)
     }
@@ -230,7 +245,12 @@ struct ContentView: View {
                     with: key,
                     and: value
                 )
-                .padding(EdgeInsets(top: 13, leading: 13, bottom: 10, trailing: 40))
+                .padding(EdgeInsets(
+                    top: 13,
+                    leading: 13,
+                    bottom: 10,
+                    trailing: 40
+                ))
                 separator()
             }
         }
@@ -239,7 +259,11 @@ struct ContentView: View {
     private func separator() -> some View  {
         Rectangle()
             .frame(height: 1)
-            .foregroundStyle(Color(red: 0.31, green: 0.31, blue: 0.31))
+            .foregroundStyle(Color(
+                red: 0.31,
+                green: 0.31,
+                blue: 0.31
+            ))
     }
     
     private func note(with title: String, and description: String) -> some View {
@@ -270,7 +294,11 @@ struct ContentView: View {
     private func noteDescription(with text: String) -> some View {
         Text(text)
             .font(.system(size: 10, weight: .bold))
-            .foregroundColor(Color(red: 0.4, green: 0.4, blue: 0.4))
+            .foregroundColor(Color(
+                red: 0.4,
+                green: 0.4,
+                blue: 0.4
+            ))
     }
     
 }
