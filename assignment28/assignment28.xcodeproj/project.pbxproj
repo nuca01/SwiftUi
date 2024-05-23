@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		872D9A872BFEC9CE006DE3A9 /* CardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872D9A862BFEC9CE006DE3A9 /* CardsView.swift */; };
 		874833B02BFE28A700A52977 /* assignment28App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874833AF2BFE28A700A52977 /* assignment28App.swift */; };
 		874833B22BFE28A700A52977 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874833B12BFE28A700A52977 /* ContentView.swift */; };
 		874833B42BFE28A900A52977 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 874833B32BFE28A900A52977 /* Assets.xcassets */; };
@@ -14,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		872D9A862BFEC9CE006DE3A9 /* CardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsView.swift; sourceTree = "<group>"; };
 		874833AC2BFE28A700A52977 /* assignment28.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = assignment28.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		874833AF2BFE28A700A52977 /* assignment28App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = assignment28App.swift; sourceTree = "<group>"; };
 		874833B12BFE28A700A52977 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -53,6 +55,7 @@
 			children = (
 				874833AF2BFE28A700A52977 /* assignment28App.swift */,
 				874833B12BFE28A700A52977 /* ContentView.swift */,
+				872D9A862BFEC9CE006DE3A9 /* CardsView.swift */,
 				874833B32BFE28A900A52977 /* Assets.xcassets */,
 				874833B52BFE28A900A52977 /* Preview Content */,
 			);
@@ -137,6 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				872D9A872BFEC9CE006DE3A9 /* CardsView.swift in Sources */,
 				874833B22BFE28A700A52977 /* ContentView.swift in Sources */,
 				874833B02BFE28A700A52977 /* assignment28App.swift in Sources */,
 			);
