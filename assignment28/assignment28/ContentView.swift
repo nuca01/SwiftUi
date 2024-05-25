@@ -140,5 +140,4 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .background(Color(red: 0.098, green: 0.145, blue: 0.169))
 }
