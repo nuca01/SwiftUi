@@ -112,7 +112,8 @@ struct ContentView: View {
     //MARK: - Upper View
     private var title: some View {
         Text("You have \(incompleteTasks.count) tasks to complete")
-            .font(.system(size: 25, weight: .semibold))
+            .font(.custom("Roboto", size: 25))
+            .fontWeight(.bold)
             .lineLimit(2)
             .frame(width: 250, alignment: .leading)
             .multilineTextAlignment(.leading)
@@ -181,15 +182,9 @@ struct ContentView: View {
         }
     }
     
-    private func semiTitle(with text: String) -> some View {
-        Text(text)
-            .font(.system(size: 16))
-    }
-    
-    
     private func sectionTitle(with text: String) -> some View {
         Text(text)
-            .font(.system(size: 22))
+            .font(.custom("Roboto", size: 22))
     }
 
     //MARK: - Upper View HelperMethods
@@ -258,7 +253,7 @@ struct ContentView: View {
         HStack {
             VStack(alignment: .leading) {
                 Text(task.title)
-                    .font(.system(size: 16))
+                    .font(.custom("Inter", size: 16))
                 
                 dateView(with: task.date)
             }
@@ -311,7 +306,7 @@ struct ContentView: View {
             
             
             Text(date)
-                .font(.system(size: 14))
+                .font(.custom("Inter", size: 14))
                 .opacity(0.8)
         }
     }
@@ -320,26 +315,29 @@ struct ContentView: View {
     private func progressText() -> some View {
         VStack(alignment: .leading, spacing: 4) {
             Text("Daily Task")
-                .font(.system(size: 18, weight: .medium))
+                .font(.custom("Inter", size: 18))
+                .fontWeight(.medium)
             
             Text("\(completedTasks.count)/\(tasks.count) Task Completed")
-                .font(.system(size: 16))
+                .font(.custom("Inter", size: 16))
                 .opacity(0.8)
             
             if incompleteTasks.count > 0 {
                 Text("Keep Working")
-                    .font(.system(size: 14, weight: .light))
+                    .font(.custom("Inter", size: 14))
+                    .fontWeight(.ultraLight)
                     .opacity(0.8)
             } else {
                 Text("Good Job")
-                    .font(.system(size: 14, weight: .light))
+                    .font(.custom("Inter", size: 14))
+                    .fontWeight(.ultraLight)
                     .opacity(0.8)
             }
         }
     }
     
     private func progressBar() -> some View {
-        var percent = Double(completedTasks.count) / Double(tasks.count)
+        let percent = Double(completedTasks.count) / Double(tasks.count)
         
         return ZStack(alignment: .leading) {
             RoundedRectangle(cornerRadius: 18, style: .continuous)
