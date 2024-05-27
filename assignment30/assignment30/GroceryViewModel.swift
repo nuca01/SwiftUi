@@ -35,9 +35,7 @@ final class GroceryViewModel: ObservableObject {
     }
     
     func removeFromCart(product: Product) {
-        if let count = cart[product], count >= 1 {
-            cart[product] = count - 1
-        }
+        cart[product] = cart[product]! - 1
     }
     
     func deleteFromCart(product: Product) {
@@ -54,5 +52,9 @@ final class GroceryViewModel: ObservableObject {
     
     func notInStock(product: Product) -> Bool {
         product.stock == cart[product, default: 0]
+    }
+    
+    func isNotInCart(product: Product) -> Bool {
+        cart[product, default: 0] == 0
     }
 }

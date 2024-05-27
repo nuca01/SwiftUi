@@ -51,6 +51,7 @@ struct ProductRow: View {
         }) {
             Image(systemName: "minus.circle")
         }
+        .disabled(viewModel.isNotInCart(product: product))
     }
     
     private var addButton: some View {
@@ -68,6 +69,7 @@ struct ProductRow: View {
         }) {
             Image(systemName: "trash")
         }
+        .disabled(viewModel.isNotInCart(product: product))
     }
     
     //MARK: - Methods
