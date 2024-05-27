@@ -1,0 +1,21 @@
+{
+  "images" : [
+    {
+      "filename" : "red-carrot-red-carrot-transparent-background-ai-generated-free-png.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
