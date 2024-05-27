@@ -11,7 +11,7 @@ import SwiftUI
 struct assignment30App: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(viewModel: GroceryViewModel())
         }
     }
 }

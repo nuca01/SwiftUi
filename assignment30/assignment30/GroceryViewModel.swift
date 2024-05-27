@@ -6,3 +6,51 @@
 //
 
 import Foundation
+
+final class GroceryViewModel: ObservableObject {
+    //MARK: - Properties
+    @Published private var cart: [Product: Int] = [:]
+    
+    private let products: [Product] = [
+        Product(name: "Apple", price: 0.99, imageName: "apple", type: .Fruit),
+        Product(name: "Banana", price: 0.59, imageName: "banana", type: .Fruit),
+        Product(name: "Carrot", price: 2.35, imageName: "carrot", type: .Vegetable)
+    ]
+    
+    var totalCost: Double {
+        cart.reduce(0) { $0 + ($1.key.price * Double($1.value)) }
+    }
+    
+    var numberOfProducts: Int {
+        products.count
+    }
+    
+    var totalItems: Int {
+        cart.values.reduce(0, +)
+    }
+    
+    //MARK: - Methods
+    func addToCart(product: Product) {
+        cart[product, default: 0] += 1
+    }
+    
+    func removeFromCart(product: Product) {
+        if let count = cart[product], count > 1 {
+            cart[product] = count - 1
+        } else {
+            cart[product] = nil
+        }
+    }
+    
+    func deleteFromCart(product: Product) {
+        cart[product] = nil
+    }
+    
+    func numberOfItems(of product: Product) -> Int {
+        cart[product, default: 0]
+    }
+    
+    func productsOf(type: ProductType) -> [Product] {
+        products.filter{$0.type == type}
+    }
+}

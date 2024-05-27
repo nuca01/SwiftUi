@@ -6,3 +6,17 @@
 //
 
 import Foundation
+
+enum ProductType: CaseIterable, Identifiable {
+    case Fruit
+    case Vegetable
+    var id: Self { self }
+}
+
+struct Product: Identifiable, Hashable {
+    let id = UUID()
+    let name: String
+    let price: Double
+    let imageName: String
+    let type: ProductType
+}
