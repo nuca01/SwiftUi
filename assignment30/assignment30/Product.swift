@@ -19,4 +19,5 @@ struct Product: Identifiable, Hashable {
     let price: Double
     let imageName: String
     let type: ProductType
+    var stock: Int
 }

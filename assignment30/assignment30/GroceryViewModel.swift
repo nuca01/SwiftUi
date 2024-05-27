@@ -12,9 +12,9 @@ final class GroceryViewModel: ObservableObject {
     @Published private var cart: [Product: Int] = [:]
     
     private let products: [Product] = [
-        Product(name: "Apple", price: 0.99, imageName: "apple", type: .Fruit),
-        Product(name: "Banana", price: 0.59, imageName: "banana", type: .Fruit),
-        Product(name: "Carrot", price: 2.35, imageName: "carrot", type: .Vegetable)
+        Product(name: "Apple", price: 0.99, imageName: "apple", type: .Fruit, stock: 0),
+        Product(name: "Banana", price: 0.59, imageName: "banana", type: .Fruit, stock: 15),
+        Product(name: "Carrot", price: 2.35, imageName: "carrot", type: .Vegetable, stock: 12)
     ]
     
     var totalCost: Double {
@@ -35,15 +35,13 @@ final class GroceryViewModel: ObservableObject {
     }
     
     func removeFromCart(product: Product) {
-        if let count = cart[product], count > 1 {
+        if let count = cart[product], count >= 1 {
             cart[product] = count - 1
-        } else {
-            cart[product] = nil
         }
     }
     
     func deleteFromCart(product: Product) {
-        cart[product] = nil
+        cart[product] = 0
     }
     
     func numberOfItems(of product: Product) -> Int {
@@ -52,5 +50,9 @@ final class GroceryViewModel: ObservableObject {
     
     func productsOf(type: ProductType) -> [Product] {
         products.filter{$0.type == type}
+    }
+    
+    func notInStock(product: Product) -> Bool {
+        product.stock == cart[product, default: 0]
     }
 }

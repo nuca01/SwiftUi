@@ -37,9 +37,11 @@ struct ProductRow: View {
         VStack(alignment: .leading) {
             Text(product.name)
                 .font(.headline)
+                .foregroundStyle(colorDependingOnStock())
             
             Text("$\(product.price, specifier: "%.2f")")
                 .font(.subheadline)
+                .foregroundStyle(colorDependingOnStock())
         }
     }
     
@@ -57,6 +59,7 @@ struct ProductRow: View {
         }) {
             Image(systemName: "plus.circle")
         }
+        .disabled(viewModel.notInStock(product: product))
     }
     
     private var deleteButton: some View {
@@ -80,6 +83,9 @@ struct ProductRow: View {
         }
     }
     
+    private func colorDependingOnStock() -> Color {
+        viewModel.notInStock(product: product) ? Color.gray : Color.accentColor
+    }
     //MARK: - Initializers
     init(viewModel: GroceryViewModel, product: Product) {
         self.viewModel = viewModel
