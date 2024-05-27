@@ -22,6 +22,8 @@ struct FooterView: View {
             Spacer()
             
             paymentButton
+            
+            discountButton
         }
         .padding()
         .background(Color.gray.opacity(0.2))
@@ -37,6 +39,18 @@ struct FooterView: View {
             Text("Payment")
                 .padding()
                 .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(10)
+        }
+    }
+    
+    private var discountButton: some View {
+        Button(action: {
+            viewModel.toggleDiscount()
+        }) {
+            Text("Discount")
+                .padding()
+                .background(Color.red)
                 .foregroundColor(.white)
                 .cornerRadius(10)
         }

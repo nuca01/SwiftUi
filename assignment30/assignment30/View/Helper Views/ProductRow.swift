@@ -88,6 +88,7 @@ struct ProductRow: View {
     private func colorDependingOnStock() -> Color {
         viewModel.notInStock(product: product) ? Color.gray : Color.accentColor
     }
+    
     //MARK: - Initializers
     init(viewModel: GroceryViewModel, product: Product) {
         self.viewModel = viewModel

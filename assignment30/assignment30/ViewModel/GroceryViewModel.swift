@@ -11,14 +11,17 @@ final class GroceryViewModel: ObservableObject {
     //MARK: - Properties
     @Published private var cart: [Product: Int] = [:]
     
-    private let products: [Product] = [
+    @Published var isDiscountApplied: Bool = false
+    
+    @Published private var products: [Product] = [
         Product(name: "Apple", price: 0.99, imageName: "apple", type: .Fruit, stock: 0),
         Product(name: "Banana", price: 0.59, imageName: "banana", type: .Fruit, stock: 15),
         Product(name: "Carrot", price: 2.35, imageName: "carrot", type: .Vegetable, stock: 12)
     ]
     
     var totalCost: Double {
-        cart.reduce(0) { $0 + ($1.key.price * Double($1.value)) }
+        let total = cart.reduce(0) { $0 + ($1.key.price * Double($1.value)) }
+        return isDiscountApplied ? total * 0.8 : total
     }
     
     var numberOfProducts: Int {
@@ -56,5 +59,14 @@ final class GroceryViewModel: ObservableObject {
     
     func isNotInCart(product: Product) -> Bool {
         cart[product, default: 0] == 0
+    }
+    
+    func toggleDiscount() {
+        products = products.map {
+            var product = $0
+            product.price = product.price * 0.8
+            return product
+        }
+        isDiscountApplied.toggle()
     }
 }

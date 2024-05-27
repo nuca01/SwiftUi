@@ -16,8 +16,8 @@ enum ProductType: CaseIterable, Identifiable {
 struct Product: Identifiable, Hashable {
     let id = UUID()
     let name: String
-    let price: Double
+    var price: Double
     let imageName: String
     let type: ProductType
-    var stock: Int
+    let stock: Int
 }
