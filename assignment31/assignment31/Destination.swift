@@ -11,14 +11,20 @@ struct Destination: Decodable {
     let name: String
     let imageURL: String
     let information: String
-    let transports: [Transport]
+    let transports: Transports
     let hotels: [Hotel]
     let mustSee: MustSee
 }
 
+struct Transports: Decodable {
+    let taxi: Transport
+    let subway: Transport
+    let bus: Transport
+    let tram: Transport
+}
+
 struct Transport: Decodable {
-    let type: String
-    let information: String
+    let information: String?
     let available: Bool
 }
 

@@ -63,8 +63,8 @@
 			children = (
 				873695B62C075C3C007D8D9B /* assignment31App.swift */,
 				873695C42C07B033007D8D9B /* Destination.swift */,
-				873695D02C07DAE7007D8D9B /* Destination Detail Screen */,
 				873695CB2C07CC72007D8D9B /* Main Screen */,
+				873695D02C07DAE7007D8D9B /* Destination Detail Screen */,
 				873695BA2C075C3E007D8D9B /* Assets.xcassets */,
 				873695BC2C075C3E007D8D9B /* Preview Content */,
 			);
@@ -82,8 +82,8 @@
 		873695CB2C07CC72007D8D9B /* Main Screen */ = {
 			isa = PBXGroup;
 			children = (
-				873695C92C07CB84007D8D9B /* MainScreenViewViewModel.swift */,
 				873695B82C075C3C007D8D9B /* MainScreenView.swift */,
+				873695C92C07CB84007D8D9B /* MainScreenViewViewModel.swift */,
 			);
 			path = "Main Screen";
 			sourceTree = "<group>";

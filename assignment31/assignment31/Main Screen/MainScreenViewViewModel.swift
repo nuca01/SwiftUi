@@ -12,7 +12,7 @@ final class MainScreenViewViewModel: ObservableObject {
     @Published var arrayOfDestinations: [Destination] = []
     
     func fetchDetails() {
-        NetworkService.networkService.getData(urlString: "https://mocki.io/v1/9467f2c5-600b-4e87-840b-d55d916ed2d6") { (result: Result<[Destination], Error>) in
+        NetworkService.networkService.getData(urlString: "https://mocki.io/v1/e1eb584c-2401-4acc-8d5f-d5720de1cc7b") { (result: Result<[Destination], Error>) in
             switch result {
             case .success(let destinations):
                 self.arrayOfDestinations = destinations
