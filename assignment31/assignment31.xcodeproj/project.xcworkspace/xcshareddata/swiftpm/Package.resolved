@@ -1,0 +1,15 @@
+{
+  "originHash" : "56741af172fc9cd9a89a1e5884129a29792cfa9d0d0d84bae4968729ea81aa3a",
+  "pins" : [
+    {
+      "identity" : "networkingservice",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nuca01/NetworkingService",
+      "state" : {
+        "branch" : "main",
+        "revision" : "a04ae75d703ce255f3c84278ecc54f89a6a1ec89"
+      }
+    }
+  ],
+  "version" : 3
+}
