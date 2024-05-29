@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct MainScreenView: View {
-   @ObservedObject private var viewModel: MainScreenViewViewModel
+    @ObservedObject private var viewModel: MainScreenViewViewModel
+    @State private var showTip = false
     
     var body: some View {
         NavigationStack {
             title
+            tipButton
             listOfDestinations
         }
         .navigationTitle("Travel Destinations")
@@ -23,6 +25,9 @@ struct MainScreenView: View {
                     //                        showTravelTip()
                 }
             }
+        }
+        .alert(isPresented: $showTip) {
+            Alert(title: Text("Tip!"), message: Text(viewModel.getRandomTip()), dismissButton: .default(Text("Thank you!")))
         }
     }
     
@@ -54,6 +59,18 @@ struct MainScreenView: View {
         }
     }
     
+    private var tipButton: some View {
+        Button(action: {
+            showTip = true
+        }) {
+            Text("give me a tip")
+                .font(.headline)
+                .foregroundStyle(Color.brown)
+                .padding()
+                .background(Color.yellow)
+                .clipShape(RoundedRectangle(cornerRadius: 25))
+        }
+    }
     init(viewModel: MainScreenViewViewModel) {
         self.viewModel = viewModel
     }
