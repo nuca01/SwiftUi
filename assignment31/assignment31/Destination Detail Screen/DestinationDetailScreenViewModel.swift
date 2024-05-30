@@ -8,7 +8,7 @@
 import Foundation
 
 final class DestinationDetailScreenViewModel {
-    var destination: Destination
+    let destination: Destination
     
     var imageURL: URL? {
         URL(string: destination.imageURL)

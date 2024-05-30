@@ -8,47 +8,62 @@
 import SwiftUI
 
 struct DestinationDetailScreen: View {
-    private var viewModel: DestinationDetailScreenViewModel
+    var viewModel: DestinationDetailScreenViewModel
+    @Binding var navigationPath: NavigationPath
     
     var body: some View {
-        ZStack(alignment: .bottom) {
-            ZStack {
-                image
-                
-                VStack {
-                    Text(viewModel.destination.name)
-                        .font(.largeTitle)
-                    
-                    Text(viewModel.destination.information)
-                        .font(.callout)
-                }
-                .padding()
-                .background(Color.white)
-                .clipShape(RoundedRectangle(cornerRadius: 25))
-            }
+        backgroundAndText
+        
+        buttons
+        
+    }
+    
+    
+    private var backgroundAndText: some View {
+        ZStack {
+            image
             
-            HStack {
-                changeViewButton(imageName: "hotel")
-                changeViewButton(imageName: "transport")
-                changeViewButton(imageName: "mustSee")
+            VStack {
+                Text(viewModel.destination.name)
+                    .font(.largeTitle)
+                
+                Text(viewModel.destination.information)
+                    .font(.callout)
             }
+            .padding()
+            .background(Color.white)
+            .clipShape(RoundedRectangle(cornerRadius: 25))
+        }
+    }
+    
+    private var buttons: some View {
+        HStack {
+            changeViewButton(imageName: "hotel", view: HotelPage(hotels: viewModel.destination.hotels, navigationPath: $navigationPath))
+            
+            changeViewButton(imageName: "transport", view: TransportPage(transports: viewModel.destination.transports, navigationPath: $navigationPath))
+            
+            changeViewButton(imageName: "mustSee", view: MustSeePage(viewModel: MustSeePageViewModel(mustSee: viewModel.destination.mustSee), navigationPath: $navigationPath))
         }
     }
     
     private var image: some View {
-        AsyncImage(url: viewModel.imageURL) { image in
+        AsyncImage(url: viewModel.imageURL, content:  { image in
             image
-                .image?.resizable()
+                .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
                 .opacity(0.5)
-        }
+        }, placeholder: {
+            Image("hotel")
+                .resizable()
+                .scaledToFill()
+            .ignoresSafeArea()
+            .opacity(0)
+        })
     }
     
-    private func changeViewButton(imageName: String) -> some View {
-        Button(action: {
-
-        }) {
+    private func changeViewButton(imageName: String, view: some View) -> some View {
+        NavigationLink(destination: view) {
             ZStack {
                 Circle()
                     .frame(width: 90, height: 90)
@@ -59,11 +74,7 @@ struct DestinationDetailScreen: View {
                     .resizable()
                     .frame(width: 70, height: 70)
             }
-            
         }
-    }
-    init(viewModel: DestinationDetailScreenViewModel) {
-        self.viewModel = viewModel
     }
 }
 

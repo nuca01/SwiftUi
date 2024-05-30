@@ -16,6 +16,12 @@
 		873695CA2C07CB85007D8D9B /* MainScreenViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873695C92C07CB84007D8D9B /* MainScreenViewViewModel.swift */; };
 		873695CD2C07CFEA007D8D9B /* DestinationDetailScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873695CC2C07CFEA007D8D9B /* DestinationDetailScreen.swift */; };
 		873695CF2C07DAE1007D8D9B /* DestinationDetailScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873695CE2C07DAE1007D8D9B /* DestinationDetailScreenViewModel.swift */; };
+		873695D22C07EFE3007D8D9B /* TransportPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873695D12C07EFE2007D8D9B /* TransportPage.swift */; };
+		873695D42C080C02007D8D9B /* HotelPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873695D32C080C02007D8D9B /* HotelPage.swift */; };
+		873695D62C081285007D8D9B /* HotelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873695D52C081285007D8D9B /* HotelCell.swift */; };
+		873695D82C0812A0007D8D9B /* HotelCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873695D72C0812A0007D8D9B /* HotelCellViewModel.swift */; };
+		873695DE2C081391007D8D9B /* MustSeePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873695DD2C081391007D8D9B /* MustSeePage.swift */; };
+		873695E02C081C39007D8D9B /* MustSeePageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873695DF2C081C39007D8D9B /* MustSeePageViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +34,12 @@
 		873695C92C07CB84007D8D9B /* MainScreenViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenViewViewModel.swift; sourceTree = "<group>"; };
 		873695CC2C07CFEA007D8D9B /* DestinationDetailScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationDetailScreen.swift; sourceTree = "<group>"; };
 		873695CE2C07DAE1007D8D9B /* DestinationDetailScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationDetailScreenViewModel.swift; sourceTree = "<group>"; };
+		873695D12C07EFE2007D8D9B /* TransportPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransportPage.swift; sourceTree = "<group>"; };
+		873695D32C080C02007D8D9B /* HotelPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelPage.swift; sourceTree = "<group>"; };
+		873695D52C081285007D8D9B /* HotelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelCell.swift; sourceTree = "<group>"; };
+		873695D72C0812A0007D8D9B /* HotelCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelCellViewModel.swift; sourceTree = "<group>"; };
+		873695DD2C081391007D8D9B /* MustSeePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MustSeePage.swift; sourceTree = "<group>"; };
+		873695DF2C081C39007D8D9B /* MustSeePageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MustSeePageViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,9 +74,12 @@
 			isa = PBXGroup;
 			children = (
 				873695B62C075C3C007D8D9B /* assignment31App.swift */,
-				873695C42C07B033007D8D9B /* Destination.swift */,
+				873695DC2C081306007D8D9B /* Model */,
 				873695CB2C07CC72007D8D9B /* Main Screen */,
 				873695D02C07DAE7007D8D9B /* Destination Detail Screen */,
+				873695D92C0812D2007D8D9B /* TransportPage */,
+				873695DA2C0812DE007D8D9B /* HotelPage */,
+				873695E12C081C65007D8D9B /* MustSeePage */,
 				873695BA2C075C3E007D8D9B /* Assets.xcassets */,
 				873695BC2C075C3E007D8D9B /* Preview Content */,
 			);
@@ -95,6 +110,49 @@
 				873695CE2C07DAE1007D8D9B /* DestinationDetailScreenViewModel.swift */,
 			);
 			path = "Destination Detail Screen";
+			sourceTree = "<group>";
+		};
+		873695D92C0812D2007D8D9B /* TransportPage */ = {
+			isa = PBXGroup;
+			children = (
+				873695D12C07EFE2007D8D9B /* TransportPage.swift */,
+			);
+			path = TransportPage;
+			sourceTree = "<group>";
+		};
+		873695DA2C0812DE007D8D9B /* HotelPage */ = {
+			isa = PBXGroup;
+			children = (
+				873695DB2C0812E7007D8D9B /* HotelCell */,
+				873695D32C080C02007D8D9B /* HotelPage.swift */,
+			);
+			path = HotelPage;
+			sourceTree = "<group>";
+		};
+		873695DB2C0812E7007D8D9B /* HotelCell */ = {
+			isa = PBXGroup;
+			children = (
+				873695D52C081285007D8D9B /* HotelCell.swift */,
+				873695D72C0812A0007D8D9B /* HotelCellViewModel.swift */,
+			);
+			path = HotelCell;
+			sourceTree = "<group>";
+		};
+		873695DC2C081306007D8D9B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				873695C42C07B033007D8D9B /* Destination.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		873695E12C081C65007D8D9B /* MustSeePage */ = {
+			isa = PBXGroup;
+			children = (
+				873695DD2C081391007D8D9B /* MustSeePage.swift */,
+				873695DF2C081C39007D8D9B /* MustSeePageViewModel.swift */,
+			);
+			path = MustSeePage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -176,9 +234,15 @@
 				873695CF2C07DAE1007D8D9B /* DestinationDetailScreenViewModel.swift in Sources */,
 				873695CA2C07CB85007D8D9B /* MainScreenViewViewModel.swift in Sources */,
 				873695B92C075C3C007D8D9B /* MainScreenView.swift in Sources */,
+				873695D42C080C02007D8D9B /* HotelPage.swift in Sources */,
+				873695E02C081C39007D8D9B /* MustSeePageViewModel.swift in Sources */,
 				873695B72C075C3C007D8D9B /* assignment31App.swift in Sources */,
 				873695CD2C07CFEA007D8D9B /* DestinationDetailScreen.swift in Sources */,
+				873695D62C081285007D8D9B /* HotelCell.swift in Sources */,
+				873695D82C0812A0007D8D9B /* HotelCellViewModel.swift in Sources */,
+				873695DE2C081391007D8D9B /* MustSeePage.swift in Sources */,
 				873695C52C07B033007D8D9B /* Destination.swift in Sources */,
+				873695D22C07EFE3007D8D9B /* TransportPage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

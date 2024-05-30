@@ -1,0 +1,21 @@
+{
+  "images" : [
+    {
+      "filename" : "city-bus-isolated-on-transparent-background-3d-rendering-illustration-free-png.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

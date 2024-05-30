@@ -8,24 +8,20 @@
 import SwiftUI
 
 struct MainScreenView: View {
+    //MARK: - Properties
     @ObservedObject private var viewModel: MainScreenViewViewModel
+    
     @State private var showTip = false
     
+    @State private var navigationPath = NavigationPath()
+    
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $navigationPath) {
             title
-            tipButton
             listOfDestinations
+            tipButton
         }
         .navigationTitle("Travel Destinations")
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button("Travel Tips") {
-                    // Show random travel tips using an alert
-                    //                        showTravelTip()
-                }
-            }
-        }
         .alert(isPresented: $showTip) {
             Alert(title: Text("Tip!"), message: Text(viewModel.getRandomTip()), dismissButton: .default(Text("Thank you!")))
         }
@@ -38,7 +34,7 @@ struct MainScreenView: View {
     
     private var listOfDestinations: some View {
         List(viewModel.arrayOfDestinations, id: \.name) { destination in
-            NavigationLink(destination: DestinationDetailScreen(viewModel: DestinationDetailScreenViewModel(destination: destination))) {
+            NavigationLink(destination: DestinationDetailScreen(viewModel: DestinationDetailScreenViewModel(destination: destination), navigationPath: $navigationPath)) {
                 VStack {
                     Text(destination.name)
                         .font(.headline)
@@ -50,14 +46,6 @@ struct MainScreenView: View {
         
     }
     
-    private func image(for destination: Destination) -> some View {
-        AsyncImage(url: viewModel.imageURL(for: destination)) { image in
-            image
-                .image?.resizable()
-                .scaledToFit()
-                .clipShape(RoundedRectangle(cornerRadius: 25))
-        }
-    }
     
     private var tipButton: some View {
         Button(action: {
@@ -69,8 +57,23 @@ struct MainScreenView: View {
                 .padding()
                 .background(Color.yellow)
                 .clipShape(RoundedRectangle(cornerRadius: 25))
+                .shadow(radius: 5)
         }
     }
+    
+    //MARK: - Method
+    
+    private func image(for destination: Destination) -> some View {
+        AsyncImage(url: viewModel.imageURL(for: destination)) { image in
+            image
+                .image?.resizable()
+                .scaledToFit()
+                .clipShape(RoundedRectangle(cornerRadius: 25))
+        }
+    }
+    
+    //MARK: - Initializer
+    
     init(viewModel: MainScreenViewViewModel) {
         self.viewModel = viewModel
     }
