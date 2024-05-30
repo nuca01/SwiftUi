@@ -10,7 +10,6 @@ import SwiftUI
 struct TransportPage: View {
     var transports: Transports
     @Binding var navigationPath: NavigationPath
-    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         transportView(with: transports.bus, and: "bus")
@@ -21,14 +20,10 @@ struct TransportPage: View {
         
         transportView(with: transports.tram, and: "tram")
         
-        button
-    }
-    
-    private var button: some View {
         Button(action: {
-            presentationMode.wrappedValue.dismiss()
+            navigationPath.removeLast(navigationPath.count)
         }, label: {
-            Text("Button")
+            Text("Back To Main Page")
         })
     }
     

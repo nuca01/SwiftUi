@@ -10,12 +10,10 @@ import SwiftUI
 struct DestinationDetailScreen: View {
     var viewModel: DestinationDetailScreenViewModel
     @Binding var navigationPath: NavigationPath
-    
     var body: some View {
         backgroundAndText
         
         buttons
-        
     }
     
     
@@ -38,11 +36,27 @@ struct DestinationDetailScreen: View {
     
     private var buttons: some View {
         HStack {
-            changeViewButton(imageName: "hotel", view: HotelPage(hotels: viewModel.destination.hotels, navigationPath: $navigationPath))
             
-            changeViewButton(imageName: "transport", view: TransportPage(transports: viewModel.destination.transports, navigationPath: $navigationPath))
+            NavigationLink(value: viewModel.destination.hotels) {
+                changeViewButton(imageName: "hotel")
+            }
+            .navigationDestination(for: [Hotel].self) { hotels in
+                HotelPage(hotels: hotels)
+            }
             
-            changeViewButton(imageName: "mustSee", view: MustSeePage(viewModel: MustSeePageViewModel(mustSee: viewModel.destination.mustSee), navigationPath: $navigationPath))
+            NavigationLink(value: viewModel.destination.transports) {
+                changeViewButton(imageName: "transport")
+            }
+            .navigationDestination(for: Transports.self) { transports in
+                TransportPage(transports: transports, navigationPath: $navigationPath)
+            }
+            
+            NavigationLink(value: viewModel.destination.mustSee) {
+                changeViewButton(imageName: "mustSee")
+            }
+            .navigationDestination(for: MustSee.self) { mustSee in
+                MustSeePage(viewModel: MustSeePageViewModel(mustSee: mustSee))
+            }
         }
     }
     
@@ -62,19 +76,18 @@ struct DestinationDetailScreen: View {
         })
     }
     
-    private func changeViewButton(imageName: String, view: some View) -> some View {
-        NavigationLink(destination: view) {
-            ZStack {
-                Circle()
-                    .frame(width: 90, height: 90)
-                    .foregroundStyle(Color.white)
-                    .shadow(radius: 10)
-                
-                Image(imageName)
-                    .resizable()
-                    .frame(width: 70, height: 70)
-            }
+    private func changeViewButton(imageName: String) -> some View {
+        ZStack {
+            Circle()
+                .frame(width: 90, height: 90)
+                .foregroundStyle(Color.white)
+                .shadow(radius: 10)
+            
+            Image(imageName)
+                .resizable()
+                .frame(width: 70, height: 70)
         }
+        
     }
 }
 

@@ -13,8 +13,7 @@ struct MainScreenView: View {
     
     @State private var showTip = false
     
-    @State private var navigationPath = NavigationPath()
-    
+    @State var navigationPath = NavigationPath()
     var body: some View {
         NavigationStack(path: $navigationPath) {
             title
@@ -34,12 +33,15 @@ struct MainScreenView: View {
     
     private var listOfDestinations: some View {
         List(viewModel.arrayOfDestinations, id: \.name) { destination in
-            NavigationLink(destination: DestinationDetailScreen(viewModel: DestinationDetailScreenViewModel(destination: destination), navigationPath: $navigationPath)) {
+            NavigationLink(value: destination) {
                 VStack {
                     Text(destination.name)
                         .font(.headline)
                     image(for: destination)
                 }
+            }
+            .navigationDestination(for: Destination.self) { destination in
+                DestinationDetailScreen(viewModel: DestinationDetailScreenViewModel(destination: destination), navigationPath: $navigationPath)
             }
         }
         .listStyle(.insetGrouped)

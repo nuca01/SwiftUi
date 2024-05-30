@@ -10,14 +10,9 @@ import SwiftUI
 struct MustSeePage: View {
     var viewModel: MustSeePageViewModel
     
-    @Binding var navigationPath: NavigationPath
-    @Environment(\.presentationMode) var presentationMode
-    
     var body: some View {
         ZStack {
             image
-
-            
         }
         VStack {
             name
