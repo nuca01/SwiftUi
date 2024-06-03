@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct SearchPageView: View {
-    @ObservedObject private var viewModel: SearchPageViewModel
-    
+    @ObservedObject var viewModel: SearchPageViewModel
     var body: some View {
         NavigationStack{
             ScrollView{
@@ -33,7 +32,7 @@ struct SearchPageView: View {
     
     private var charactersList: some View {
         LazyVStack {
-            Text("characters:")
+            Text("characters: ")
                 .font(.title)
             ForEach(viewModel.searchResultsCharacters) { character in
                 characterCell(with: character)
@@ -54,7 +53,6 @@ struct SearchPageView: View {
         }
     }
     
-    //MARK: - Methods
     private func characterCell(with character: Character) -> some View {
         HStack {
             image(with: viewModel.imageURL(url: character.image ?? ""))
@@ -63,7 +61,6 @@ struct SearchPageView: View {
                 .frame(minWidth: 50)
         }
     }
-    
     private func image(with url: URL?) -> some View {
         AsyncImage(url: url) { image in
             image
@@ -72,11 +69,6 @@ struct SearchPageView: View {
                 .scaledToFit()
                 .clipShape(RoundedRectangle(cornerRadius: 25))
         }
-    }
-    
-    //MARK: - Initializer
-    init(viewModel: SearchPageViewModel) {
-        self.viewModel = viewModel
     }
 }
 

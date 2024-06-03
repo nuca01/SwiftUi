@@ -6,43 +6,48 @@
 //
 
 import SwiftUI
-
-//protocol CharactersPageDelegate: AnyObject {
-//    var characters: [Character] {get}
-//}
 struct CharactersPage: View {
-    @ObservedObject var delegate: CharactersPageViewModel
+    @ObservedObject var viewModel: CharactersPageViewModel
     
     private let rows = [
-            GridItem(.flexible()),
-            GridItem(.flexible())
-        ]
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
     
-    @State private var isPresentingSheet = false
     var body: some View {
         NavigationView {
             ScrollView {
-                LazyVGrid(columns: rows, alignment: .listRowSeparatorLeading) {
-                    ForEach(delegate.characters ?? [Character]()) { character in
-                        
-                        Button(action: {
-                            isPresentingSheet.toggle()
-                        }, label: {
-                            HStack {
-                                image(with: delegate.imageURL(url: character.image ?? ""))
-                                
-                                Text(character.name ?? "name unknown")
-                                    .frame(minWidth: 50)
-                            }
-                        })
-                        .sheet(isPresented: $isPresentingSheet, content: {
-                            CharactersDetailsView(viewModel: CharactersDetailsViewViewModel(character: character))
-                        })
-                    }
-                }
+                listOfCharacters
             }
             .padding()
         }
+    }
+    
+    private var listOfCharacters: some View {
+        LazyVGrid(columns: rows, alignment: .listRowSeparatorLeading) {
+            ForEach(viewModel.characters ?? [Character]()) { character in
+                NavigationLink(destination: detailsView(of: character)) {
+                    HStack {
+                        characterCell(of: character)
+                    }
+                }
+            }
+        }
+    }
+    
+    private func characterCell(of character: Character) -> some View {
+        HStack {
+            image(with: viewModel.imageURL(url: character.image ?? ""))
+            
+            Text(character.name ?? "name unknown")
+                .frame(minWidth: 50)
+        }
+    }
+    
+    private func detailsView(of character: Character) -> CharactersDetailsView {
+        CharactersDetailsView(
+            viewModel: CharactersDetailsViewViewModel(character: character)
+        )
     }
     
     private func image(with url: URL?) -> some View {
@@ -54,8 +59,4 @@ struct CharactersPage: View {
                 .clipShape(RoundedRectangle(cornerRadius: 25))
         }
     }
-}
-
-#Preview {
-    CharactersPage(delegate: CharactersPageViewModel())
 }

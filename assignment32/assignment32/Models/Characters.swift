@@ -1,5 +1,5 @@
 //
-//  Character.swift
+//  Characters.swift
 //  assignment32
 //
 //  Created by nuca on 31.05.24.
@@ -7,9 +7,8 @@
 
 import Foundation
 
-struct Characters {
-    var character: [Character]
-    let url: String = "
+struct Characters: Decodable {
+    let results: [Character]
 }
 struct Character: Decodable, Identifiable {
     let id: Int?
@@ -21,6 +20,7 @@ struct Character: Decodable, Identifiable {
     let origin: Origin?
     let url: String?
     let image: String?
+    let episode: [String]?
 }
 
 struct Origin: Decodable {
