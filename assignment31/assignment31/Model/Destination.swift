@@ -7,6 +7,18 @@
 
 import Foundation
 
+struct identifiableDestination: Hashable, Identifiable {
+    let id: Int
+    let destination: Destination
+    static var idCounter = 0
+    
+    init(destination: Destination) {
+        self.id = identifiableDestination.idCounter
+        self.destination = destination
+        identifiableDestination.idCounter += 1
+    }
+}
+
 struct Destination: Decodable, Hashable {
     let name: String
     let imageURL: String
