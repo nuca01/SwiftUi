@@ -11,7 +11,7 @@ import SwiftUI
 struct assignment34App: App {
     var body: some Scene {
         WindowGroup {
-            MovieListPageView()
+            ContentView()
         }
     }
 }

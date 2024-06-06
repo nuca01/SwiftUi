@@ -8,9 +8,11 @@
 import Foundation
 
 final class SearchPageViewModel: ObservableObject {
+    //MARK: - Properties
     @Published var searchQuery: String = ""
     @Published var results: [Movie]?
     
+    //MARK: - Method
     func fetchData() {
         let queryItems: [URLQueryItem] = [
             URLQueryItem(name: "query", value: searchQuery),
@@ -38,6 +40,7 @@ final class SearchPageViewModel: ObservableObject {
         }
     }
     
+    //MARK: - Initializer
     init() {
         fetchData()
     }

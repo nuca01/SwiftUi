@@ -29,7 +29,7 @@ struct MovieListPageView: View {
         VStack(alignment: .leading, spacing: 10) {
             titleText(with: "Now Playing In Theatres")
             
-            MoviesList(movies: viewModel.nowPlaying)
+            movieList(movies: viewModel.nowPlaying)
         }
     }
     
@@ -37,7 +37,7 @@ struct MovieListPageView: View {
         VStack(alignment: .leading, spacing: 10) {
             titleText(with: "Top Rated")
             
-            MoviesList(movies: viewModel.topRated)
+            movieList(movies: viewModel.topRated)
         }
     }
     
@@ -45,10 +45,10 @@ struct MovieListPageView: View {
         VStack(alignment: .leading, spacing: 10) {
             titleText(with: "Popular Now")
             
-            MoviesList(movies: viewModel.popular)
+            movieList(movies: viewModel.popular)
         }
     }
-    
+
     //MARK: - Methods
     private func titleText(with text: String) -> some View {
         Text(text)
@@ -63,6 +63,19 @@ struct MovieListPageView: View {
                 .scaledToFit()
                 .frame(width: 200)
                 .clipShape(RoundedRectangle(cornerRadius: 25))
+        }
+    }
+    
+    private func movieList(movies: [Movie]?) -> some View{
+        ScrollView(.horizontal) {
+            LazyHStack(alignment: .top, spacing: 10) {
+                if let movies {
+                    ForEach(movies) { movie in
+                        MovieCell(movie: movie)
+                            .frame(width: 200, height: 400)
+                    }
+                }
+            }
         }
     }
 }

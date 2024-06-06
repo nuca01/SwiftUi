@@ -10,9 +10,7 @@ import Foundation
 final class MovieListPageViewModel: ObservableObject {
     //MARK: - Properties
     @Published var nowPlaying: [Movie]?
-    
     @Published var popular: [Movie]?
-    
     @Published var topRated: [Movie]?
     
     //MARK: - Methods
