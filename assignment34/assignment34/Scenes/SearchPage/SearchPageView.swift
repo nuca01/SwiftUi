@@ -13,7 +13,7 @@ struct SearchPageView: View {
     var body: some View {
         NavigationStack {
             MoviesList(movies: viewModel.results, alignment: .vertical)
-                .background(Color.gray)
+                .background(Color.pink.opacity(0.2))
         }
         .searchable(text: $viewModel.searchQuery, placement: .automatic, prompt: "search for a movie")
         .onChange(of: viewModel.searchQuery) {

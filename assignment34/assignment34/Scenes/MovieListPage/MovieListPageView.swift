@@ -11,11 +11,18 @@ struct MovieListPageView: View {
     //MARK: - Properties
     @StateObject var viewModel = MovieListPageViewModel()
     var body: some View {
-        ScrollView {
-            nowPlaying
-            topRated
-            popular
+        VStack(alignment: .leading) {
+            Text("Movies")
+                .font(.largeTitle)
+            
+            ScrollView {
+                nowPlaying
+                topRated
+                popular
+            }
         }
+        .padding()
+        .background(Color.pink.opacity(0.2))
     }
     
     private var nowPlaying: some View {
@@ -24,7 +31,6 @@ struct MovieListPageView: View {
             
             MoviesList(movies: viewModel.nowPlaying)
         }
-        .padding()
     }
     
     private var topRated: some View {
@@ -33,7 +39,6 @@ struct MovieListPageView: View {
             
             MoviesList(movies: viewModel.topRated)
         }
-        .padding()
     }
     
     private var popular: some View {
@@ -42,7 +47,6 @@ struct MovieListPageView: View {
             
             MoviesList(movies: viewModel.popular)
         }
-        .padding()
     }
     
     //MARK: - Methods
@@ -50,7 +54,6 @@ struct MovieListPageView: View {
         Text(text)
             .font(.title)
             .fontWeight(.bold)
-            .foregroundStyle(Color.white)
     }
     
     private func image(with url: String) -> some View {
@@ -66,5 +69,4 @@ struct MovieListPageView: View {
 
 #Preview {
     MovieListPageView()
-        .background(Color.secondary)
 }

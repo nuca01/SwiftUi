@@ -76,7 +76,6 @@ struct MoviesList: View {
             .lineLimit(nil)
             .fixedSize(horizontal: false, vertical: true)
             .font(.headline)
-            .foregroundStyle(Color.white)
     }
     
     //MARK: - Initializer
