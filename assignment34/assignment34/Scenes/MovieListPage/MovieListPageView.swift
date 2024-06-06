@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MovieListPageView: View {
+    //MARK: - Properties
     @StateObject var viewModel = MovieListPageViewModel()
     var body: some View {
         ScrollView {
@@ -21,7 +22,7 @@ struct MovieListPageView: View {
         VStack(alignment: .leading, spacing: 10) {
             titleText(with: "Now Playing In Theatres")
             
-            movieListOf(movies: viewModel.nowPlaying?.results)
+            MoviesList(movies: viewModel.nowPlaying)
         }
         .padding()
     }
@@ -30,7 +31,7 @@ struct MovieListPageView: View {
         VStack(alignment: .leading, spacing: 10) {
             titleText(with: "Top Rated")
             
-            movieListOf(movies: viewModel.topRated?.results)
+            MoviesList(movies: viewModel.topRated)
         }
         .padding()
     }
@@ -39,27 +40,17 @@ struct MovieListPageView: View {
         VStack(alignment: .leading, spacing: 10) {
             titleText(with: "Popular Now")
             
-            movieListOf(movies: viewModel.popular?.results)
+            MoviesList(movies: viewModel.popular)
         }
         .padding()
     }
     
+    //MARK: - Methods
     private func titleText(with text: String) -> some View {
         Text(text)
             .font(.title)
             .fontWeight(.bold)
             .foregroundStyle(Color.white)
-    }
-    private func movieListOf(movies: [Movie]?) -> some View {
-        ScrollView(.horizontal) {
-            LazyHStack(alignment: .top, spacing: 10) {
-                if let movies {
-                    ForEach(movies) { movie in
-                        MovieCell(movie: movie)
-                    }
-                }
-            }
-        }
     }
     
     private func image(with url: String) -> some View {

@@ -7,13 +7,15 @@
 
 import Foundation
 
-class MovieListPageViewModel: ObservableObject {
-    @Published var nowPlaying: Results?
+final class MovieListPageViewModel: ObservableObject {
+    //MARK: - Properties
+    @Published var nowPlaying: [Movie]?
     
-    @Published var popular: Results?
+    @Published var popular: [Movie]?
     
-    @Published var topRated: Results?
+    @Published var topRated: [Movie]?
     
+    //MARK: - Methods
     func imageURL(url: String) -> URL? {
         URL(string: url)
     }
@@ -31,16 +33,15 @@ class MovieListPageViewModel: ObservableObject {
     }
     
     private func fetchData(with url: String, of array: ArrayType) {
-        
         let queryItems: [URLQueryItem] = [
-          URLQueryItem(name: "language", value: "en-US"),
-          URLQueryItem(name: "page", value: "1"),
+            URLQueryItem(name: "language", value: "en-US"),
+            URLQueryItem(name: "page", value: "1"),
         ]
         
         let headers = [
             "accept": "application/json",
             "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1ODRhNjIxNjY0NjZlZjc1NzYwNzQ5MjgyMmE3MmJkOSIsInN1YiI6IjY2NjBhZDU4ZTg1NjZiNmE4Y2EyMjhlMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.7cIzniNLbg7LZB5Z-IjJP7Ftd_dI9F8863UEsREQ0yk"
-          ]
+        ]
         
         NetworkingService.networkService.getData(
             urlString: url,
@@ -52,24 +53,25 @@ class MovieListPageViewModel: ObservableObject {
             case .success(let data):
                 switch array {
                 case .nowPlaying:
-                    self.nowPlaying = data
+                    self.nowPlaying = data.results
                 case .popular:
-                    self.popular = data
+                    self.popular = data.results
                 case .topRated:
-                    self.topRated = data
+                    self.topRated = data.results
                 }
             case .failure(let error):
                 print(error.localizedDescription)
             }
         }
     }
-    
+    //MARK: - Enum
     private enum ArrayType {
         case nowPlaying
         case popular
         case topRated
     }
     
+    //MARK: - Initializer
     init() {
         fetchNowPlaying()
         fetchPopular()
