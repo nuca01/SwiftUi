@@ -28,7 +28,7 @@ struct MovieListPageView: View {
             }
         }
         .padding()
-        .background(Color.pink.opacity(0.2))
+        .background(Color(uiColor: UIColor.secondarySystemBackground))
     }
     
     var moviesGrid: some View {
@@ -80,9 +80,9 @@ struct MovieCell: View {
     
     var body: some View {
         VStack(alignment: .center) {
-            image(with: movie.posterPath)
+            image(with: movie.posterPath ?? "")
             
-            Text(movie.title)
+            Text(movie.title ?? "title unavailable")
                 .font(.headline)
                 .multilineTextAlignment(.center)
                 .lineLimit(nil)

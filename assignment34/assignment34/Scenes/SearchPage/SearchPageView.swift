@@ -11,23 +11,44 @@ struct SearchPageView: View {
     //MARK: - Properties
     @StateObject var viewModel = SearchPageViewModel()
     
+    @State private var showPicker: Bool = false
+    
     private let columns = [
         GridItem(.flexible())
     ]
     
     var body: some View {
-//        NavigationStack {
-            CustomSearchBar(searchText: $viewModel.searchQuery)
-                .background(Color.pink.opacity(0.2))
-                moviesGrid
-                .background(Color.pink.opacity(0.2))
-//        }
-//        .searchable(text: $viewModel.searchQuery, placement: .automatic, prompt: "search for a movie")
-//        .onChange(of: viewModel.searchQuery) {
-//            viewModel.fetchData()
-//        }
+        VStack {
+            HStack {
+                CustomSearchBar(searchText: $viewModel.searchQuery)
+                
+                picker
+            }
+            moviesGrid
+        }
+        .background(Color(uiColor: UIColor.secondarySystemBackground))
     }
     
+    var picker: some View {
+        Menu {
+            Picker(selection: $viewModel.selection, label: pickerImage, content: {
+                Text("Name").tag("Name")
+                Text("Genre").tag("Genre")
+                Text("Year").tag("Year")
+            })
+        } label: {
+             pickerImage
+        }
+        .padding(.trailing)
+    }
+    
+    var pickerImage: some View {
+        Image("Picker")
+            .resizable()
+            .foregroundStyle(Color(uiColor: UIColor.label))
+            .frame(width: 30, height: 30)
+    }
+        
     var moviesGrid: some View {
         ScrollView {
             LazyVGrid(columns: columns, alignment: .center, spacing: 30) {
@@ -48,7 +69,7 @@ struct ExtendedMovieCell: View {
     
     var body: some View {
         HStack(alignment: .top) {
-            image(with: movie.posterPath)
+            image(with: movie.posterPath ?? "")
             
             info
             
@@ -58,7 +79,7 @@ struct ExtendedMovieCell: View {
     
     private var info: some View {
         VStack(alignment: .leading) {
-            Text(movie.title)
+            Text(movie.title ?? "title unavailable")
                 .font(.system(size: 21))
                 .multilineTextAlignment(.leading)
                 .lineLimit(nil)
@@ -71,7 +92,7 @@ struct ExtendedMovieCell: View {
             
             Spacer()
             
-            infoRow(with: "Star", and: String(format: "%.1f", movie.voteAverage))
+            infoRow(with: "Star", and: String(format: "%.1f", movie.voteAverage ?? 0))
                 .foregroundStyle(Color(uiColor: UIColor(
                     red: 1,
                     green: 0.53,
@@ -79,9 +100,9 @@ struct ExtendedMovieCell: View {
                     alpha: 1
                 )))
             
-            infoRow(with: "Ticket", and: Genre(rawValue: movie.genreIds[0])?.name ?? "unavailable")
+            infoRow(with: "Ticket", and: Genre(rawValue: movie.genreIds?.first ?? 0)?.name ?? "unavailable")
             
-            infoRow(with: "Calendar", and: String(movie.releaseDate.prefix(4)))
+            infoRow(with: "Calendar", and: String(movie.releaseDate?.prefix(4) ?? "unavailable"))
         }
     }
     
@@ -103,6 +124,7 @@ struct ExtendedMovieCell: View {
             Image(imageName)
                 .resizable()
                 .frame(width: 23, height: 23)
+                .foregroundColor(Color(uiColor: UIColor.label))
             
             Text(text)
                 .font(.system(size: 17))
@@ -153,16 +175,18 @@ struct CustomSearchBar: View {
     
     private var textfield: some View {
         TextField("Search...", text: $searchText)
-            .padding(7)
-            .padding(.horizontal, 25)
-            .background(Color(.systemGray6))
-            .cornerRadius(8)
+            .padding(12)
+            .padding(.horizontal, 10)
+            .background(Color("SearchBarColor", bundle: nil))
+            .cornerRadius(18)
             .overlay(
                 HStack {
-                    magnifyingGlassImage
-
+                    Spacer()
+                    
                     if isEditing {
                         clearButton
+                    } else {
+                        magnifyingGlassImage
                     }
                 }
             )
@@ -173,10 +197,11 @@ struct CustomSearchBar: View {
     }
     
     private var magnifyingGlassImage: some View {
-        Image(systemName: "magnifyingglass")
-            .foregroundColor(.gray)
-            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-            .padding(.leading, 8)
+        Image("search")
+            .resizable()
+            .foregroundColor(Color(uiColor: UIColor.systemGray))
+            .frame(width: 20, height: 20)
+            .padding(.trailing, 12)
     }
 }
 

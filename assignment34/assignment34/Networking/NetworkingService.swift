@@ -19,10 +19,12 @@ struct NetworkingService {
     
     public func getData<T: Decodable> (urlString: String, queryItems: [URLQueryItem], headers: [String: String], completion: @escaping (Result<T,Error>) -> (Void)) {
         
-        guard var components = URLComponents(string: urlString) else {
+        guard let url = URL(string: urlString) else {
             completion(.failure(NetworkError.invalidURL))
             return
         }
+        
+        var components = URLComponents(url: url, resolvingAgainstBaseURL: true)!
         
         components.queryItems = components.queryItems.map { $0 + queryItems } ?? queryItems
         
@@ -70,22 +72,3 @@ struct NetworkingService {
         }.resume()
     }
 }
-
-//let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing")!
-//var components = URLComponents(url: url, resolvingAgainstBaseURL: true)!
-//let queryItems: [URLQueryItem] = [
-//  URLQueryItem(name: "language", value: "en-US"),
-//  URLQueryItem(name: "page", value: "1"),
-//]
-//components.queryItems = components.queryItems.map { $0 + queryItems } ?? queryItems
-//
-//var request = URLRequest(url: components.url!)
-//request.httpMethod = "GET"
-//request.timeoutInterval = 10
-//request.allHTTPHeaderFields = [
-//  "accept": "application/json",
-//  "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1ODRhNjIxNjY0NjZlZjc1NzYwNzQ5MjgyMmE3MmJkOSIsInN1YiI6IjY2NjBhZDU4ZTg1NjZiNmE4Y2EyMjhlMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.7cIzniNLbg7LZB5Z-IjJP7Ftd_dI9F8863UEsREQ0yk"
-//]
-//
-//let (data, _) = try await URLSession.shared.data(for: request)
-//print(String(decoding: data, as: UTF8.self))

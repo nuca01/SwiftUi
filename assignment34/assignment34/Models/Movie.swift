@@ -8,12 +8,12 @@
 import Foundation
 
 struct Movie: Decodable, Identifiable {
-    let posterPath: String
-    let title: String
-    let id: Int
-    let voteAverage: Double
-    let genreIds: [Int]
-    let releaseDate: String
+    let posterPath: String?
+    let title: String?
+    let id: Int?
+    let voteAverage: Double?
+    let genreIds: [Int]?
+    let releaseDate: String?
     
     enum CodingKeys: String, CodingKey {
         case posterPath = "poster_path"

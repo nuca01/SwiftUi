@@ -16,12 +16,12 @@ final class SearchPageViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     //MARK: - Method
-    private func fetchData(with url: String, and queryItem: URLQueryItem) {
-        var queryItems: [URLQueryItem] = [
-            queryItem,
+    private func fetchData(with url: String, and queryItemArray: [URLQueryItem]) {
+        let queryItems: [URLQueryItem] = [
+            URLQueryItem(name: "include_adult", value: "false"),
             URLQueryItem(name: "language", value: "en-US"),
             URLQueryItem(name: "page", value: "1"),
-        ]
+        ] + queryItemArray
         
         let headers = [
             "accept": "application/json",
@@ -29,7 +29,7 @@ final class SearchPageViewModel: ObservableObject {
         ]
         
         NetworkingService.networkService.getData(
-            urlString: "https://api.themoviedb.org/3/search/movie",
+            urlString: url,
             queryItems: queryItems,
             headers: headers
         ) {
@@ -44,28 +44,43 @@ final class SearchPageViewModel: ObservableObject {
     }
     
     private func fetchByName() {
+        let queries = [URLQueryItem(name: "query", value: searchQuery)]
+        
         fetchData(
             with: "https://api.themoviedb.org/3/search/movie",
-            and: URLQueryItem(name: "query", value: searchQuery)
+            and: queries
         )
     }
     
     private func fetchByGenre() {
+        
+        let queries = [
+            URLQueryItem(name: "with_genres", value: Genre.nameToGenreID[searchQuery.lowercased()] ?? "0"),
+            URLQueryItem(name: "include_video", value: "false"),
+            URLQueryItem(name: "sort_by", value: "popularity.desc"),
+        ]
+        
         fetchData(
             with: "https://api.themoviedb.org/3/discover/movie",
-            and: URLQueryItem(name: "with_genres", value: Genre.nameToGenreID[searchQuery])
+            and: queries
         )
     }
     
     private func fetchByYear() {
+        let queries = [
+            URLQueryItem(name: "year", value: searchQuery),
+            URLQueryItem(name: "include_video", value: "false"),
+            URLQueryItem(name: "sort_by", value: "popularity.desc"),
+        ]
         fetchData(
             with: "https://api.themoviedb.org/3/discover/movie",
-            and: URLQueryItem(name: "year", value: searchQuery)
+            and: queries
         )
     }
     
     private func addSubscribers() {
         $searchQuery
+            .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
             .combineLatest($selection)
             .sink { searchText, selectionText  in
                 switch selectionText {
