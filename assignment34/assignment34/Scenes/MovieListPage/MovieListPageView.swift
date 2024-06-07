@@ -10,42 +10,36 @@ import SwiftUI
 struct MovieListPageView: View {
     //MARK: - Properties
     @StateObject var viewModel = MovieListPageViewModel()
+    
+    private let columns = [
+        GridItem(.flexible(), spacing: 20),
+        GridItem(.flexible(), spacing: 20),
+        GridItem(.flexible())
+    ]
+    
     var body: some View {
         VStack(alignment: .leading) {
             Text("Movies")
                 .font(.largeTitle)
+                .fontWeight(.bold)
             
             ScrollView {
-                nowPlaying
-                topRated
-                popular
+                moviesGrid
             }
         }
         .padding()
         .background(Color.pink.opacity(0.2))
     }
     
-    private var nowPlaying: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            titleText(with: "Now Playing In Theatres")
-            
-            movieList(movies: viewModel.nowPlaying)
-        }
-    }
-    
-    private var topRated: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            titleText(with: "Top Rated")
-            
-            movieList(movies: viewModel.topRated)
-        }
-    }
-    
-    private var popular: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            titleText(with: "Popular Now")
-            
-            movieList(movies: viewModel.popular)
+    var moviesGrid: some View {
+        ScrollView {
+            LazyVGrid(columns: columns, alignment: .center, spacing: 20) {
+                if let movies = viewModel.moviesList {
+                    ForEach(movies) { movie in
+                        MovieCell(movie: movie)
+                    }
+                }
+            }
         }
     }
 
@@ -79,6 +73,40 @@ struct MovieListPageView: View {
         }
     }
 }
+
+//MARK: - MovieCell
+struct MovieCell: View {
+    private let movie: Movie
+    
+    var body: some View {
+        VStack(alignment: .center) {
+            image(with: movie.posterPath)
+            
+            Text(movie.title)
+                .font(.headline)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+            
+            Spacer()
+        }
+    }
+    
+    private func image(with url: String) -> some View {
+        AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500\(url)")) { image in
+            image
+                 .resizable()
+                 .scaledToFit()
+                 .clipShape(RoundedRectangle(cornerRadius: 25))
+         } placeholder: {
+             ProgressView()
+                 .fixedSize()
+         }
+     }
+
+     init(movie: Movie) {
+         self.movie = movie
+     }
+ }
 
 #Preview {
     MovieListPageView()

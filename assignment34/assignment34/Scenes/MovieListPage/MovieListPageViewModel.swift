@@ -9,28 +9,14 @@ import Foundation
 
 final class MovieListPageViewModel: ObservableObject {
     //MARK: - Properties
-    @Published var nowPlaying: [Movie]?
-    @Published var popular: [Movie]?
-    @Published var topRated: [Movie]?
+    @Published var moviesList: [Movie]?
     
     //MARK: - Methods
     func imageURL(url: String) -> URL? {
         URL(string: url)
     }
     
-    private func fetchNowPlaying() {
-        fetchData(with: "https://api.themoviedb.org/3/movie/now_playing", of: .nowPlaying)
-    }
-    
-    private func fetchPopular() {
-        fetchData(with: "https://api.themoviedb.org/3/movie/popular", of: .popular)
-    }
-    
-    private func fetchTopRated() {
-        fetchData(with: "https://api.themoviedb.org/3/movie/top_rated", of: .topRated)
-    }
-    
-    private func fetchData(with url: String, of array: ArrayType) {
+    private func fetchData(with url: String) {
         let queryItems: [URLQueryItem] = [
             URLQueryItem(name: "language", value: "en-US"),
             URLQueryItem(name: "page", value: "1"),
@@ -49,14 +35,7 @@ final class MovieListPageViewModel: ObservableObject {
             (result: Result<Results, Error>) in
             switch result {
             case .success(let data):
-                switch array {
-                case .nowPlaying:
-                    self.nowPlaying = data.results
-                case .popular:
-                    self.popular = data.results
-                case .topRated:
-                    self.topRated = data.results
-                }
+                self.moviesList = data.results
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -71,8 +50,6 @@ final class MovieListPageViewModel: ObservableObject {
     
     //MARK: - Initializer
     init() {
-        fetchNowPlaying()
-        fetchPopular()
-        fetchTopRated()
+        fetchData(with: "https://api.themoviedb.org/3/discover/movie")
     }
 }

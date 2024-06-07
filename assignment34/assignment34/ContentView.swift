@@ -11,9 +11,9 @@ struct ContentView: View {
     var body: some View {
         TabView {
             MovieListPageView()
-                .tabItem { Text("movies") }
+                .tabItem { Text("Movies") }
             SearchPageView()
-                .tabItem { Text("search") }
+                .tabItem { Text("Search") }
         }
     }
 }
