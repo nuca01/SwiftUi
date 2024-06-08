@@ -14,6 +14,7 @@ struct Movie: Decodable, Identifiable {
     let voteAverage: Double?
     let genreIds: [Int]?
     let releaseDate: String?
+    let backdropPath: String?
     
     enum CodingKeys: String, CodingKey {
         case posterPath = "poster_path"
@@ -22,6 +23,7 @@ struct Movie: Decodable, Identifiable {
         case voteAverage = "vote_average"
         case genreIds = "genre_ids"
         case releaseDate = "release_date"
+        case backdropPath = "backdrop_path"
     }
 }
 
@@ -69,12 +71,4 @@ enum Genre: Int, CaseIterable {
         case .western: return "Western"
         }
     }
-    
-    static let nameToGenreID: [String: String] = {
-        var map = [String: String]()
-        for genre in Genre.allCases {
-            map[genre.name.lowercased()] = String(genre.rawValue)
-        }
-        return map
-    }()
 }

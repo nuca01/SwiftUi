@@ -1,21 +1,20 @@
 //
-//  MovieListPageViewModel.swift
+//  DetailsPageViewModel.swift
 //  assignment34
 //
-//  Created by nuca on 05.06.24.
+//  Created by nuca on 08.06.24.
 //
 
 import Foundation
 
-final class MovieListPageViewModel: ObservableObject {
-    //MARK: - Properties
-    @Published var moviesList: [Movie]?
+final class DetailsPageViewModel: ObservableObject {
+    @Published var overview: String?
     
-    //MARK: - Methods
-    private func fetchData(with url: String) {
+    var movie: Movie
+    
+    private func fetchData(with id: String) {
         let queryItems: [URLQueryItem] = [
-            URLQueryItem(name: "language", value: "en-US"),
-            URLQueryItem(name: "page", value: "1"),
+            URLQueryItem(name: "language", value: "en-US")
         ]
         
         let headers = [
@@ -24,14 +23,14 @@ final class MovieListPageViewModel: ObservableObject {
         ]
         
         NetworkingService.networkService.getData(
-            urlString: url,
+            urlString: "https://api.themoviedb.org/3/movie/" + id,
             queryItems: queryItems,
             headers: headers
         ) {
-            (result: Result<Results, Error>) in
+            (result: Result<Overview, Error>) in
             switch result {
             case .success(let data):
-                self.moviesList = data.results
+                self.overview = data.overview
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -46,15 +45,8 @@ final class MovieListPageViewModel: ObservableObject {
         }
     }
     
-    //MARK: - Enum
-    private enum ArrayType {
-        case nowPlaying
-        case popular
-        case topRated
-    }
-    
-    //MARK: - Initializer
-    init() {
-        fetchData(with: "https://api.themoviedb.org/3/discover/movie")
+    init(movie: Movie) {
+        self.movie = movie
+        fetchData(with: "\(movie.id ?? 0)")
     }
 }

@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		874422F12C13B94600A60301 /* Splash Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 874422F02C13B94600A60301 /* Splash Screen.storyboard */; };
+		874422F62C13C7E600A60301 /* DetailsPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874422F52C13C7E600A60301 /* DetailsPageView.swift */; };
+		874422F82C13D07A00A60301 /* Overview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874422F72C13D07A00A60301 /* Overview.swift */; };
+		874422FA2C13D09F00A60301 /* DetailsPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874422F92C13D09F00A60301 /* DetailsPageViewModel.swift */; };
 		87D7E93E2C10E6900097F381 /* assignment34App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D7E93D2C10E6900097F381 /* assignment34App.swift */; };
 		87D7E9402C10E6900097F381 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D7E93F2C10E6900097F381 /* ContentView.swift */; };
 		87D7E9422C10E6920097F381 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87D7E9412C10E6920097F381 /* Assets.xcassets */; };
@@ -23,6 +26,9 @@
 
 /* Begin PBXFileReference section */
 		874422F02C13B94600A60301 /* Splash Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Splash Screen.storyboard"; sourceTree = "<group>"; };
+		874422F52C13C7E600A60301 /* DetailsPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsPageView.swift; sourceTree = "<group>"; };
+		874422F72C13D07A00A60301 /* Overview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Overview.swift; sourceTree = "<group>"; };
+		874422F92C13D09F00A60301 /* DetailsPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsPageViewModel.swift; sourceTree = "<group>"; };
 		87D7E93A2C10E6900097F381 /* assignment34.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = assignment34.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87D7E93D2C10E6900097F381 /* assignment34App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = assignment34App.swift; sourceTree = "<group>"; };
 		87D7E93F2C10E6900097F381 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -48,6 +54,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		874422F22C13C65800A60301 /* DetailsPage */ = {
+			isa = PBXGroup;
+			children = (
+				874422F52C13C7E600A60301 /* DetailsPageView.swift */,
+				874422F92C13D09F00A60301 /* DetailsPageViewModel.swift */,
+			);
+			path = DetailsPage;
+			sourceTree = "<group>";
+		};
 		87D7E9312C10E6900097F381 = {
 			isa = PBXGroup;
 			children = (
@@ -71,11 +86,10 @@
 				87D7E93F2C10E6900097F381 /* ContentView.swift */,
 				87D7E94B2C10E6A50097F381 /* Models */,
 				87D7E9592C1124F30097F381 /* Scenes */,
-				87D7E95A2C11251A0097F381 /* Views */,
 				87D7E9602C114F840097F381 /* Networking */,
 				87D7E9412C10E6920097F381 /* Assets.xcassets */,
-				87D7E9432C10E6920097F381 /* Preview Content */,
 				874422F02C13B94600A60301 /* Splash Screen.storyboard */,
+				87D7E9432C10E6920097F381 /* Preview Content */,
 			);
 			path = assignment34;
 			sourceTree = "<group>";
@@ -93,6 +107,7 @@
 			children = (
 				87D7E94C2C10E6E80097F381 /* Movie.swift */,
 				87D7E9612C114FB10097F381 /* Results.swift */,
+				874422F72C13D07A00A60301 /* Overview.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -111,15 +126,9 @@
 			children = (
 				87D7E94E2C10F9E00097F381 /* MovieListPage */,
 				87D7E95B2C11252C0097F381 /* SearchPage */,
+				874422F22C13C65800A60301 /* DetailsPage */,
 			);
 			path = Scenes;
-			sourceTree = "<group>";
-		};
-		87D7E95A2C11251A0097F381 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		87D7E95B2C11252C0097F381 /* SearchPage */ = {
@@ -214,8 +223,11 @@
 				87D7E9542C10FADB0097F381 /* MovieListPageViewModel.swift in Sources */,
 				87D7E9402C10E6900097F381 /* ContentView.swift in Sources */,
 				87D7E9622C114FB10097F381 /* Results.swift in Sources */,
+				874422F82C13D07A00A60301 /* Overview.swift in Sources */,
+				874422F62C13C7E600A60301 /* DetailsPageView.swift in Sources */,
 				87D7E93E2C10E6900097F381 /* assignment34App.swift in Sources */,
 				87D7E9562C1105770097F381 /* NetworkingService.swift in Sources */,
+				874422FA2C13D09F00A60301 /* DetailsPageViewModel.swift in Sources */,
 				87D7E95D2C11271E0097F381 /* SearchPageView.swift in Sources */,
 				87D7E9522C10FAC50097F381 /* MovieListPageView.swift in Sources */,
 				87D7E94D2C10E6E80097F381 /* Movie.swift in Sources */,

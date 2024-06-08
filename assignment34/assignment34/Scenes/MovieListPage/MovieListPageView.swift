@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MovieListPageView: View {
     //MARK: - Properties
-    @StateObject var viewModel = MovieListPageViewModel()
+    @ObservedObject private var viewModel: MovieListPageViewModel
     
     private let columns = [
         GridItem(.flexible(), spacing: 20),
@@ -18,96 +18,106 @@ struct MovieListPageView: View {
     ]
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("Movies")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-            
-            ScrollView {
+        NavigationStack {
+            VStack(alignment: .leading) {
+                title
+                
                 moviesGrid
             }
+            .padding()
+            .background(Color(uiColor: UIColor.secondarySystemBackground))
         }
-        .padding()
-        .background(Color(uiColor: UIColor.secondarySystemBackground))
     }
     
-    var moviesGrid: some View {
-        ScrollView {
-            LazyVGrid(columns: columns, alignment: .center, spacing: 20) {
-                if let movies = viewModel.moviesList {
-                    ForEach(movies) { movie in
-                        MovieCell(movie: movie)
-                    }
-                }
-            }
-        }
-    }
-
-    //MARK: - Methods
-    private func titleText(with text: String) -> some View {
-        Text(text)
-            .font(.title)
+    private var title: some View {
+        Text("Movies")
+            .font(.largeTitle)
             .fontWeight(.bold)
     }
     
-    private func image(with url: String) -> some View {
-        AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500\(url)")) { image in
-            image
-                .image?.resizable()
-                .scaledToFit()
-                .frame(width: 200)
-                .clipShape(RoundedRectangle(cornerRadius: 25))
-        }
-    }
-    
-    private func movieList(movies: [Movie]?) -> some View{
-        ScrollView(.horizontal) {
-            LazyHStack(alignment: .top, spacing: 10) {
-                if let movies {
+    private var moviesGrid: some View {
+        ScrollView {
+            LazyVGrid(
+                columns: columns,
+                alignment: .center,
+                spacing: 20
+            ) {
+                if let movies = viewModel.moviesList {
                     ForEach(movies) { movie in
-                        MovieCell(movie: movie)
-                            .frame(width: 200, height: 400)
+                        NavigationLink(destination: {
+                            DetailsPageView(viewModel: DetailsPageViewModel(movie: movie))
+                        }) {
+                            MovieCell(
+                                titleString: movie.title,
+                                url: viewModel.imageURL(url: movie.posterPath)
+                            )
+                                .foregroundStyle(Color(uiColor: UIColor.label))
+                        }
                     }
                 }
             }
         }
+    }
+    
+    //MARK: - Initializer
+    init(viewModel: MovieListPageViewModel) {
+        self.viewModel = viewModel
     }
 }
 
 //MARK: - MovieCell
 struct MovieCell: View {
-    private let movie: Movie
+    private let titleString: String?
+    
+    private let url: URL?
     
     var body: some View {
         VStack(alignment: .center) {
-            image(with: movie.posterPath ?? "")
+            image
             
-            Text(movie.title ?? "title unavailable")
-                .font(.headline)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
+            title
             
             Spacer()
         }
     }
     
-    private func image(with url: String) -> some View {
-        AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500\(url)")) { image in
+    private var title: some View {
+        Text(titleString ?? "title unavailable")
+            .font(.headline)
+            .multilineTextAlignment(.center)
+            .lineLimit(nil)
+    }
+    
+    private var image: some View {
+        AsyncImage(url: url) { image in
             image
                  .resizable()
                  .scaledToFit()
                  .clipShape(RoundedRectangle(cornerRadius: 25))
          } placeholder: {
-             ProgressView()
-                 .fixedSize()
+             VStack() {
+                 Spacer()
+                 
+                 if url != nil {
+                     ProgressView()
+                         .fixedSize()
+                 } else {
+                     Image(systemName: "xmark")
+                 }
+                 
+                 Spacer()
+             }
+             .frame(minHeight: 160)
          }
      }
 
-     init(movie: Movie) {
-         self.movie = movie
-     }
+    //MARK: - Initializer
+    init(titleString: String?, url: URL?) {
+        self.titleString = titleString
+        self.url = url
+    }
  }
 
 #Preview {
-    MovieListPageView()
+    MovieListPageView(viewModel: MovieListPageViewModel())
 }

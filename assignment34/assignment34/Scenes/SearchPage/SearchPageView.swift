@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SearchPageView: View {
     //MARK: - Properties
-    @StateObject var viewModel = SearchPageViewModel()
+    @ObservedObject private var viewModel: SearchPageViewModel
     
     @State private var showPicker: Bool = false
     
@@ -18,22 +18,52 @@ struct SearchPageView: View {
     ]
     
     var body: some View {
-        VStack {
-            HStack {
-                CustomSearchBar(searchText: $viewModel.searchQuery)
+        NavigationStack {
+            ZStack {
+                VStack {
+                    HStack {
+                        CustomSearchBar(searchText: $viewModel.searchQuery)
+                        
+                        picker
+                    }
+                    moviesGrid
+                }
+                .background(Color(uiColor: UIColor.secondarySystemBackground))
                 
-                picker
+                explanationText
             }
-            moviesGrid
         }
-        .background(Color(uiColor: UIColor.secondarySystemBackground))
     }
     
-    var picker: some View {
+    private var explanationText: some View {
+        VStack(spacing: 20) {
+            if let results = viewModel.results, results.isEmpty {
+                Text(
+                    viewModel.searchQuery.isEmpty ?
+                    "Use The magic Search!" : "oh no isn’t this so embarrassing?"
+                )
+                    .font(.headline)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                
+                Text(
+                    viewModel.searchQuery.isEmpty ? 
+                    "I will do my best to search everything relevant, I promise!" : "I cannot find any movie with this name."
+                )
+                    .font(.caption)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+            }
+        }
+    }
+    
+    private var picker: some View {
         Menu {
             Picker(selection: $viewModel.selection, label: pickerImage, content: {
                 Text("Name").tag("Name")
+                
                 Text("Genre").tag("Genre")
+                
                 Text("Year").tag("Year")
             })
         } label: {
@@ -42,34 +72,50 @@ struct SearchPageView: View {
         .padding(.trailing)
     }
     
-    var pickerImage: some View {
+    private var pickerImage: some View {
         Image("Picker")
             .resizable()
             .foregroundStyle(Color(uiColor: UIColor.label))
             .frame(width: 30, height: 30)
     }
         
-    var moviesGrid: some View {
+    private var moviesGrid: some View {
         ScrollView {
             LazyVGrid(columns: columns, alignment: .center, spacing: 30) {
                 if let movies = viewModel.results {
                     ForEach(movies) { movie in
-                        ExtendedMovieCell(movie: movie)
+                        NavigationLink(destination: {
+                            DetailsPageView(viewModel: DetailsPageViewModel(movie: movie))
+                        }) {
+                            ExtendedMovieCell(
+                                movie: movie,
+                                url: viewModel.imageURL(url: movie.posterPath)
+                            )
+                                .foregroundStyle(Color(uiColor: UIColor.label))
+                        }
                     }
                 }
             }
             .padding()
         }
     }
+    
+    //MARK: - Initializer
+    init(viewModel: SearchPageViewModel) {
+        self.viewModel = viewModel
+    }
 }
 
-//MARK: - MovieCell
+//MARK: - ExtendedMovieCell
 struct ExtendedMovieCell: View {
+    //MARK: - Properties
     private let movie: Movie
+    
+    private let url: URL?
     
     var body: some View {
         HStack(alignment: .top) {
-            image(with: movie.posterPath ?? "")
+            image
             
             info
             
@@ -93,12 +139,6 @@ struct ExtendedMovieCell: View {
             Spacer()
             
             infoRow(with: "Star", and: String(format: "%.1f", movie.voteAverage ?? 0))
-                .foregroundStyle(Color(uiColor: UIColor(
-                    red: 1,
-                    green: 0.53,
-                    blue: 0,
-                    alpha: 1
-                )))
             
             infoRow(with: "Ticket", and: Genre(rawValue: movie.genreIds?.first ?? 0)?.name ?? "unavailable")
             
@@ -106,19 +146,32 @@ struct ExtendedMovieCell: View {
         }
     }
     
-    private func image(with url: String) -> some View {
-        AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500\(url)")) { image in
+    @ViewBuilder
+    private var image: some View {
+        AsyncImage(url: url) { image in
             image
-                 .resizable()
-                 .scaledToFit()
-                 .frame(maxWidth: 120)
-                 .clipShape(RoundedRectangle(cornerRadius: 25))
-         } placeholder: {
-             ProgressView()
-                 .fixedSize()
-         }
-     }
+                .resizable()
+                .scaledToFit()
+                .frame(maxWidth: 120)
+                .clipShape(RoundedRectangle(cornerRadius: 25))
+        } placeholder: {
+            VStack() {
+                Spacer()
+                
+                if url != nil {
+                    ProgressView()
+                        .fixedSize()
+                } else {
+                    Image(systemName: "xmark")
+                }
+                
+                Spacer()
+            }
+            .frame(maxWidth: 120)
+        }
+    }
     
+    //MARK: - Method
     private func infoRow(with imageName: String, and text: String) -> some View {
         HStack {
             Image(imageName)
@@ -131,13 +184,18 @@ struct ExtendedMovieCell: View {
             
         }
     }
+    
+    //MARK: - Initializer
+    init(movie: Movie, url: URL?) {
+        self.movie = movie
+        self.url = url
+    }
+}
 
-     init(movie: Movie) {
-         self.movie = movie
-     }
- }
 
+//MARK: - CustomSearchBar
 struct CustomSearchBar: View {
+    //MARK: - Properties
     @Binding var searchText: String
     @State private var isEditing = false
 
@@ -206,5 +264,5 @@ struct CustomSearchBar: View {
 }
 
 #Preview {
-    SearchPageView()
+    SearchPageView(viewModel: SearchPageViewModel())
 }

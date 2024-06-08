@@ -10,9 +10,9 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         TabView {
-            MovieListPageView()
+            MovieListPageView(viewModel: MovieListPageViewModel())
                 .tabItem { Image("Home") }
-            SearchPageView()
+            SearchPageView(viewModel: SearchPageViewModel())
                 .tabItem { Image("Search 1") }
         }
     }

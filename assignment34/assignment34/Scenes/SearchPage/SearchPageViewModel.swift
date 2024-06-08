@@ -55,7 +55,7 @@ final class SearchPageViewModel: ObservableObject {
     private func fetchByGenre() {
         
         let queries = [
-            URLQueryItem(name: "with_genres", value: Genre.nameToGenreID[searchQuery.lowercased()] ?? "0"),
+            URLQueryItem(name: "with_genres", value: nameToGenreID(from: searchQuery.lowercased())),
             URLQueryItem(name: "include_video", value: "false"),
             URLQueryItem(name: "sort_by", value: "popularity.desc"),
         ]
@@ -83,14 +83,39 @@ final class SearchPageViewModel: ObservableObject {
             .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
             .combineLatest($selection)
             .sink { searchText, selectionText  in
-                switch selectionText {
-                case "Name": self.fetchByName()
-                case "Genre": self.fetchByGenre()
-                case "Year": self.fetchByYear()
-                default: break
+                if !searchText.isEmpty {
+                    switch selectionText {
+                    case "Name": self.fetchByName()
+                    case "Genre":
+                        if Int(selectionText) != nil
+                        {
+                            self.fetchByGenre()
+                        }
+                    case "Year": self.fetchByYear()
+                    default: break
+                    }
+                } else{
+                    self.results = []
                 }
             }
             .store(in: &cancellables)
+    }
+    
+    private func nameToGenreID(from name: String) -> String {
+        for genre in Genre.allCases {
+            if genre.name.lowercased() == name {
+                return String(genre.rawValue)
+            }
+        }
+        return "0"
+    }
+    
+    func imageURL(url: String?) -> URL? {
+        if url != nil {
+            URL(string: "https://image.tmdb.org/t/p/w500" + url!)
+        } else {
+            nil
+        }
     }
     
     //MARK: - Initializer
