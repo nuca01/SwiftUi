@@ -39,7 +39,7 @@ final class DetailsPageViewModel: ObservableObject {
     
     func imageURL(url: String?) -> URL? {
         if url != nil {
-            URL(string: "https://image.tmdb.org/t/p/w500" + url!)
+            URL(string: "https://image.tmdb.org/t/p/original" + url!)
         } else {
             nil
         }

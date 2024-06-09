@@ -86,12 +86,12 @@ final class SearchPageViewModel: ObservableObject {
                 if !searchText.isEmpty {
                     switch selectionText {
                     case "Name": self.fetchByName()
-                    case "Genre":
-                        if Int(selectionText) != nil
+                    case "Genre": self.fetchByGenre()
+                    case "Year": 
+                        if Int(searchText) != nil
                         {
-                            self.fetchByGenre()
+                            self.fetchByYear()
                         }
-                    case "Year": self.fetchByYear()
                     default: break
                     }
                 } else{

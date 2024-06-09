@@ -22,7 +22,7 @@ struct DetailsPageView: View {
                     }
                     
                     posterAndName
-                        .padding(EdgeInsets(top: 130, leading: 0, bottom: 0, trailing: 0))
+                        .padding(EdgeInsets(top: UIScreen.main.bounds.width / 1.78 / 2, leading: 0, bottom: 0, trailing: 0))
                 }
                 
                 info
@@ -65,7 +65,7 @@ struct DetailsPageView: View {
             
             VStack {
                 Spacer()
-                    .frame(height: 70)
+                    .frame(height: UIScreen.main.bounds.width / 1.78 / 2)
                 
                 title
             }
@@ -83,8 +83,8 @@ struct DetailsPageView: View {
     
     private var posterImage: some View {
         image(with: viewModel.movie.posterPath)
-            .frame(height: 200)
-            .frame(maxWidth: 130)
+            .frame(width: UIScreen.main.bounds.width / 4)
+//            .frame(maxWidth: 130)
             .clipShape(RoundedRectangle(cornerRadius: 25))
     }
     
