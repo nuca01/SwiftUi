@@ -22,6 +22,10 @@
 		87D7E95D2C11271E0097F381 /* SearchPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D7E95C2C11271E0097F381 /* SearchPageView.swift */; };
 		87D7E95F2C1129BC0097F381 /* SearchPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D7E95E2C1129BC0097F381 /* SearchPageViewModel.swift */; };
 		87D7E9622C114FB10097F381 /* Results.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D7E9612C114FB10097F381 /* Results.swift */; };
+		87ED7C752C15F682000B98F9 /* MoviesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87ED7C742C15F682000B98F9 /* MoviesList.swift */; };
+		87ED7C772C15F71D000B98F9 /* MoviesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87ED7C762C15F71D000B98F9 /* MoviesListViewModel.swift */; };
+		87ED7C792C15F972000B98F9 /* ExtendedMovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87ED7C782C15F972000B98F9 /* ExtendedMovieCell.swift */; };
+		87ED7C7C2C15FBB3000B98F9 /* FavoritesPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87ED7C7B2C15FBB3000B98F9 /* FavoritesPageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +45,10 @@
 		87D7E95C2C11271E0097F381 /* SearchPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPageView.swift; sourceTree = "<group>"; };
 		87D7E95E2C1129BC0097F381 /* SearchPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPageViewModel.swift; sourceTree = "<group>"; };
 		87D7E9612C114FB10097F381 /* Results.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Results.swift; sourceTree = "<group>"; };
+		87ED7C742C15F682000B98F9 /* MoviesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesList.swift; sourceTree = "<group>"; };
+		87ED7C762C15F71D000B98F9 /* MoviesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesListViewModel.swift; sourceTree = "<group>"; };
+		87ED7C782C15F972000B98F9 /* ExtendedMovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtendedMovieCell.swift; sourceTree = "<group>"; };
+		87ED7C7B2C15FBB3000B98F9 /* FavoritesPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +94,7 @@
 				87D7E93F2C10E6900097F381 /* ContentView.swift */,
 				87D7E94B2C10E6A50097F381 /* Models */,
 				87D7E9592C1124F30097F381 /* Scenes */,
+				87ED7C712C15F62E000B98F9 /* Reusable Views */,
 				87D7E9602C114F840097F381 /* Networking */,
 				87D7E9412C10E6920097F381 /* Assets.xcassets */,
 				874422F02C13B94600A60301 /* Splash Screen.storyboard */,
@@ -127,6 +136,7 @@
 				87D7E94E2C10F9E00097F381 /* MovieListPage */,
 				87D7E95B2C11252C0097F381 /* SearchPage */,
 				874422F22C13C65800A60301 /* DetailsPage */,
+				87ED7C7A2C15FB95000B98F9 /* FavoritesPage */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -146,6 +156,32 @@
 				87D7E9552C1105770097F381 /* NetworkingService.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		87ED7C712C15F62E000B98F9 /* Reusable Views */ = {
+			isa = PBXGroup;
+			children = (
+				87ED7C7D2C15FBBC000B98F9 /* MoviesList */,
+			);
+			path = "Reusable Views";
+			sourceTree = "<group>";
+		};
+		87ED7C7A2C15FB95000B98F9 /* FavoritesPage */ = {
+			isa = PBXGroup;
+			children = (
+				87ED7C7B2C15FBB3000B98F9 /* FavoritesPageView.swift */,
+			);
+			path = FavoritesPage;
+			sourceTree = "<group>";
+		};
+		87ED7C7D2C15FBBC000B98F9 /* MoviesList */ = {
+			isa = PBXGroup;
+			children = (
+				87ED7C742C15F682000B98F9 /* MoviesList.swift */,
+				87ED7C762C15F71D000B98F9 /* MoviesListViewModel.swift */,
+				87ED7C782C15F972000B98F9 /* ExtendedMovieCell.swift */,
+			);
+			path = MoviesList;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -219,6 +255,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87ED7C792C15F972000B98F9 /* ExtendedMovieCell.swift in Sources */,
 				87D7E95F2C1129BC0097F381 /* SearchPageViewModel.swift in Sources */,
 				87D7E9542C10FADB0097F381 /* MovieListPageViewModel.swift in Sources */,
 				87D7E9402C10E6900097F381 /* ContentView.swift in Sources */,
@@ -230,6 +267,9 @@
 				874422FA2C13D09F00A60301 /* DetailsPageViewModel.swift in Sources */,
 				87D7E95D2C11271E0097F381 /* SearchPageView.swift in Sources */,
 				87D7E9522C10FAC50097F381 /* MovieListPageView.swift in Sources */,
+				87ED7C772C15F71D000B98F9 /* MoviesListViewModel.swift in Sources */,
+				87ED7C7C2C15FBB3000B98F9 /* FavoritesPageView.swift in Sources */,
+				87ED7C752C15F682000B98F9 /* MoviesList.swift in Sources */,
 				87D7E94D2C10E6E80097F381 /* Movie.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -373,7 +413,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = "Splash Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -404,7 +444,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = "Splash Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

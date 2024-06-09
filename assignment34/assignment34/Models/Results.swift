@@ -7,6 +7,10 @@
 
 import Foundation
 
-struct Results: Decodable {
+class Results: Decodable {
     let results: [Movie]
+    
+    init(results: [Movie]) {
+        self.results = results
+    }
 }

@@ -7,6 +7,10 @@
 
 import Foundation
 
-struct Overview: Decodable {
+class Overview: Decodable {
     let overview: String?
+    
+    init(overview: String?) {
+        self.overview = overview
+    }
 }
