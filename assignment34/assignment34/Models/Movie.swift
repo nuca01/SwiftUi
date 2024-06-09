@@ -6,11 +6,13 @@
 //
 
 import Foundation
+import SwiftData
 
+@Model
 class Movie: Decodable, Identifiable {
     let posterPath: String?
     let title: String?
-    let id: Int?
+    let databaseID: Int?
     let voteAverage: Double?
     let genreIds: [Int]?
     let releaseDate: String?
@@ -19,23 +21,33 @@ class Movie: Decodable, Identifiable {
     enum CodingKeys: String, CodingKey {
         case posterPath = "poster_path"
         case title
-        case id
+        case databaseID = "id"
         case voteAverage = "vote_average"
         case genreIds = "genre_ids"
         case releaseDate = "release_date"
         case backdropPath = "backdrop_path"
     }
     
-    init(posterPath: String?, title: String?, id: Int?, voteAverage: Double?, genreIds: [Int]?, releaseDate: String?, backdropPath: String?) {
+    init(posterPath: String?, title: String?, databaseID: Int?, voteAverage: Double?, genreIds: [Int]?, releaseDate: String?, backdropPath: String?) {
         self.posterPath = posterPath
         self.title = title
-        self.id = id
+        self.databaseID = databaseID
         self.voteAverage = voteAverage
         self.genreIds = genreIds
         self.releaseDate = releaseDate
         self.backdropPath = backdropPath
     }
     
+    required init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.posterPath = try container.decode(String?.self, forKey: .posterPath)
+        self.title = try container.decode(String?.self, forKey: .title)
+        self.genreIds = try container.decode([Int]?.self, forKey: .genreIds)
+        self.releaseDate = try container.decode(String?.self, forKey: .releaseDate)
+        self.backdropPath = try container.decode(String?.self, forKey: .backdropPath)
+        self.voteAverage = try container.decode(Double?.self, forKey: .voteAverage)
+        self.databaseID = try container.decode(Int?.self, forKey: .databaseID)
+    }
 }
 
 enum Genre: Int, CaseIterable {

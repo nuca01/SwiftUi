@@ -118,6 +118,7 @@ struct MovieCell: View {
     }
  }
 
-#Preview {
-    MovieListPageView(viewModel: MovieListPageViewModel())
-}
+//#Preview {
+//    MovieListPageView(viewModel: MovieListPageViewModel())
+//        .modelContainer(for: Movie.self)
+//}

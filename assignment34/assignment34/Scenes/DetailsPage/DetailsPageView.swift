@@ -6,10 +6,19 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct DetailsPageView: View {
     //MARK: - Properties
     @ObservedObject private var viewModel: DetailsPageViewModel
+    @Environment(\.modelContext) var context
+    @Query var movies: [Movie]
+    
+    var isFavorite: Bool {
+        movies.contains { movie in
+            movie.databaseID == viewModel.movie.databaseID
+        }
+    }
     
     var body: some View {
         VStack {
@@ -84,7 +93,6 @@ struct DetailsPageView: View {
     private var posterImage: some View {
         image(with: viewModel.movie.posterPath)
             .frame(width: UIScreen.main.bounds.width / 4)
-//            .frame(maxWidth: 130)
             .clipShape(RoundedRectangle(cornerRadius: 25))
     }
     
@@ -112,8 +120,29 @@ struct DetailsPageView: View {
     
     private var about: some View {
         VStack(alignment: .leading) {
-            aboutTitle
-                .padding(4)
+            HStack {
+                aboutTitle
+                    .padding(4)
+                
+                Spacer()
+                
+                Button(action: {
+                    if isFavorite
+                    {
+                        context.delete(viewModel.movie)
+                    } else {
+                        context.insert(viewModel.movie)
+                    }
+                }) {
+                    if isFavorite {
+                        Image(systemName: "heart.fill")
+                            .foregroundStyle(Color.red)
+                    } else {
+                        Image(systemName: "heart")
+                            .foregroundStyle(Color.red)
+                    }
+                }
+            }
             
             Rectangle()
                 .foregroundColor(Color(uiColor: UIColor.systemGray3))
@@ -186,9 +215,10 @@ struct DetailsPageView: View {
     }
 }
 
-#Preview {
-    DetailsPageView(viewModel: DetailsPageViewModel(movie: Movie(posterPath: "/2uNW4WbgBXL25BAbXGLnLqX71Sw.jpg", title: "Venom", id: 335983, voteAverage: 6.827, genreIds: [
-        878,
-        28
-    ], releaseDate: "2018-09-28", backdropPath: "/VuukZLgaCrho2Ar8Scl9HtV3yD.jpg")))
-}
+//#Preview {
+//    DetailsPageView(viewModel: DetailsPageViewModel(movie: Movie(posterPath: "/2uNW4WbgBXL25BAbXGLnLqX71Sw.jpg", title: "Venom", databaseID: 335983, voteAverage: 6.827, genreIds: [
+//        878,
+//        28
+//    ], releaseDate: "2018-09-28", backdropPath: "/VuukZLgaCrho2Ar8Scl9HtV3yD.jpg")))
+//    .modelContainer(for: Movie.self)
+//}

@@ -13,5 +13,6 @@ struct assignment34App: App {
         WindowGroup {
             ContentView()
         }
+        .modelContainer(for: Movie.self)
     }
 }

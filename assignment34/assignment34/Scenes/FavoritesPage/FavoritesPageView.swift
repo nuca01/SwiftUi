@@ -15,4 +15,5 @@ struct FavoritesPageView: View {
 
 #Preview {
     FavoritesPageView()
+        .modelContainer(for: Movie.self)
 }

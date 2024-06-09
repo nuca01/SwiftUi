@@ -47,6 +47,6 @@ final class DetailsPageViewModel: ObservableObject {
     
     init(movie: Movie) {
         self.movie = movie
-        fetchData(with: "\(movie.id ?? 0)")
+        fetchData(with: "\(movie.databaseID ?? 0)")
     }
 }

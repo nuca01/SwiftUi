@@ -155,4 +155,5 @@ struct CustomSearchBar: View {
 
 #Preview {
     SearchPageView(viewModel: SearchPageViewModel())
+        .modelContainer(for: Movie.self)
 }
