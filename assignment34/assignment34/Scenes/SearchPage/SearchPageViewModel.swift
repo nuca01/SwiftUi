@@ -17,21 +17,15 @@ final class SearchPageViewModel: ObservableObject {
     
     //MARK: - Method
     private func fetchData(with url: String, and queryItemArray: [URLQueryItem]) {
-        let queryItems: [URLQueryItem] = [
+        let networkConfiguring = NetworkConfiguring(queryItems: [
             URLQueryItem(name: "include_adult", value: "false"),
-            URLQueryItem(name: "language", value: "en-US"),
-            URLQueryItem(name: "page", value: "1"),
-        ] + queryItemArray
-        
-        let headers = [
-            "accept": "application/json",
-            "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1ODRhNjIxNjY0NjZlZjc1NzYwNzQ5MjgyMmE3MmJkOSIsInN1YiI6IjY2NjBhZDU4ZTg1NjZiNmE4Y2EyMjhlMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.7cIzniNLbg7LZB5Z-IjJP7Ftd_dI9F8863UEsREQ0yk"
-        ]
+            URLQueryItem(name: "page", value: "1")
+        ] + queryItemArray)
         
         NetworkingService.networkService.getData(
             urlString: url,
-            queryItems: queryItems,
-            headers: headers
+            queryItems: networkConfiguring.queryItems,
+            headers: networkConfiguring.headers
         ) {
             (result: Result<Results, Error>) in
             switch result {
@@ -91,6 +85,8 @@ final class SearchPageViewModel: ObservableObject {
                         if Int(searchText) != nil
                         {
                             self.fetchByYear()
+                        } else {
+                            self.results = []
                         }
                     default: break
                     }

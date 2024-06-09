@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct MovieListPageView: View {
     //MARK: - Properties
     @ObservedObject private var viewModel: MovieListPageViewModel
+    @Environment(\.modelContext) var context
     
     private let columns = [
         GridItem(.flexible(), spacing: 20),
@@ -45,7 +47,7 @@ struct MovieListPageView: View {
                 if let movies = viewModel.moviesList {
                     ForEach(movies) { movie in
                         NavigationLink(destination: {
-                            DetailsPageView(viewModel: DetailsPageViewModel(movie: movie))
+                            DetailsPageView(viewModel: DetailsPageViewModel(modelContext: context, movie: movie))
                         }) {
                             MovieCell(
                                 titleString: movie.title,
@@ -118,7 +120,10 @@ struct MovieCell: View {
     }
  }
 
-//#Preview {
-//    MovieListPageView(viewModel: MovieListPageViewModel())
-//        .modelContainer(for: Movie.self)
-//}
+#Preview {
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: Movie.self, configurations: config)
+
+    return MovieListPageView(viewModel: MovieListPageViewModel())
+        .modelContainer(container)
+}

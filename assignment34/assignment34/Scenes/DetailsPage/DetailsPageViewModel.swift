@@ -6,26 +6,31 @@
 //
 
 import Foundation
+import SwiftData
 
 final class DetailsPageViewModel: ObservableObject {
+    private var modelContext: ModelContext
+    
+    @Published var favoriteMovies: [Movie] = []
+    
+    var isFavorite: Bool {
+        favoriteMovies.contains { movie in
+            movie.databaseID == self.movie.databaseID
+        }
+    }
+    
     @Published var overview: String?
     
     var movie: Movie
     
     private func fetchData(with id: String) {
-        let queryItems: [URLQueryItem] = [
-            URLQueryItem(name: "language", value: "en-US")
-        ]
         
-        let headers = [
-            "accept": "application/json",
-            "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1ODRhNjIxNjY0NjZlZjc1NzYwNzQ5MjgyMmE3MmJkOSIsInN1YiI6IjY2NjBhZDU4ZTg1NjZiNmE4Y2EyMjhlMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.7cIzniNLbg7LZB5Z-IjJP7Ftd_dI9F8863UEsREQ0yk"
-        ]
+        let networkConfiguring = NetworkConfiguring()
         
         NetworkingService.networkService.getData(
             urlString: "https://api.themoviedb.org/3/movie/" + id,
-            queryItems: queryItems,
-            headers: headers
+            queryItems: networkConfiguring.queryItems,
+            headers: networkConfiguring.headers
         ) {
             (result: Result<Overview, Error>) in
             switch result {
@@ -37,6 +42,23 @@ final class DetailsPageViewModel: ObservableObject {
         }
     }
     
+    func fetchFromContext() {
+        let fetchDescriptor: FetchDescriptor<Movie> = FetchDescriptor()
+        favoriteMovies = (try? (modelContext.fetch(fetchDescriptor))) ?? []
+    }
+    
+    func addToFavorites() {
+        modelContext.insert(movie)
+        
+        favoriteMovies.append(movie)
+    }
+    
+    func removeFromFavorites() {
+        modelContext.delete(movie)
+        
+        favoriteMovies.removeAll()
+    }
+    
     func imageURL(url: String?) -> URL? {
         if url != nil {
             URL(string: "https://image.tmdb.org/t/p/original" + url!)
@@ -45,8 +67,11 @@ final class DetailsPageViewModel: ObservableObject {
         }
     }
     
-    init(movie: Movie) {
+    init(modelContext: ModelContext, movie: Movie) {
+        self.modelContext = modelContext
         self.movie = movie
+        
         fetchData(with: "\(movie.databaseID ?? 0)")
+        fetchFromContext()
     }
 }

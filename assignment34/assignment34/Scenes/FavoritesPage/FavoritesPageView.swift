@@ -6,14 +6,56 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct FavoritesPageView: View {
+    //MARK: - Properties
+    @ObservedObject private var viewModel: FavouritesPageViewModel
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            ZStack {
+                Color(uiColor: UIColor.secondarySystemBackground)
+                    .edgesIgnoringSafeArea(.all)
+                
+                if viewModel.movies.isEmpty {
+                    noFavoritesExplanation
+                } else {
+                    MoviesList(viewModel: MoviesListViewModel(movies: viewModel.movies))
+                }
+            }
+            .onAppear(perform: {
+                viewModel.fetchFromContext()
+            })
+        }
+    }
+    
+    var noFavoritesExplanation: some View {
+        VStack {
+            Text("No favourites yet")
+            .font(.headline)
+            
+            Spacer()
+                .frame(height: 10)
+            
+            Text("All moves marked as favourite will be\nadded here")
+            .font(.caption)
+            .foregroundStyle(Color.gray)
+            .multilineTextAlignment(.center)
+            .lineLimit(nil)
+        }
+    }
+    
+    //MARK: - Initializer
+    init(viewModel: FavouritesPageViewModel) {
+        self.viewModel = viewModel
     }
 }
 
 #Preview {
-    FavoritesPageView()
-        .modelContainer(for: Movie.self)
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: Movie.self, configurations: config)
+
+    return FavoritesPageView(viewModel: FavouritesPageViewModel(modelContext: ModelContext(container)))
+        .modelContainer(container)
 }

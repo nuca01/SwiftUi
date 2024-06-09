@@ -13,20 +13,14 @@ final class MovieListPageViewModel: ObservableObject {
     
     //MARK: - Methods
     private func fetchData(with url: String) {
-        let queryItems: [URLQueryItem] = [
-            URLQueryItem(name: "language", value: "en-US"),
-            URLQueryItem(name: "page", value: "1"),
-        ]
-        
-        let headers = [
-            "accept": "application/json",
-            "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1ODRhNjIxNjY0NjZlZjc1NzYwNzQ5MjgyMmE3MmJkOSIsInN1YiI6IjY2NjBhZDU4ZTg1NjZiNmE4Y2EyMjhlMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.7cIzniNLbg7LZB5Z-IjJP7Ftd_dI9F8863UEsREQ0yk"
-        ]
+        let networkConfiguring = NetworkConfiguring(queryItems: [
+            URLQueryItem(name: "page", value: "1")
+        ])
         
         NetworkingService.networkService.getData(
             urlString: url,
-            queryItems: queryItems,
-            headers: headers
+            queryItems: networkConfiguring.queryItems,
+            headers: networkConfiguring.headers
         ) {
             (result: Result<Results, Error>) in
             switch result {

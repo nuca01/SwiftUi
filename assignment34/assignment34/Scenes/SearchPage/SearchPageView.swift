@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct SearchPageView: View {
     //MARK: - Properties
     @ObservedObject private var viewModel: SearchPageViewModel
+    @Environment(\.modelContext) var context
     
     @State private var showPicker: Bool = false
     
@@ -24,12 +26,12 @@ struct SearchPageView: View {
                     }
                     
                     MoviesList(viewModel: MoviesListViewModel(movies: viewModel.results))
+                        .modelContainer(context.container)
                 }
                 .background(Color(uiColor: UIColor.secondarySystemBackground))
                 
                 explanationText
-            }
-        }
+            }        }
     }
     
     private var explanationText: some View {
@@ -154,6 +156,9 @@ struct CustomSearchBar: View {
 }
 
 #Preview {
-    SearchPageView(viewModel: SearchPageViewModel())
-        .modelContainer(for: Movie.self)
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: Movie.self, configurations: config)
+
+    return SearchPageView(viewModel: SearchPageViewModel())
+        .modelContainer(container)
 }

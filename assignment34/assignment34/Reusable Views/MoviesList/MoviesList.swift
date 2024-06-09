@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MoviesList: View {
     @ObservedObject private var viewModel: MoviesListViewModel
+    @Environment(\.modelContext) var context
     
     private let columns = [
         GridItem(.flexible())
@@ -24,7 +25,7 @@ struct MoviesList: View {
                 if let movies = viewModel.movies {
                     ForEach(movies) { movie in
                         NavigationLink(destination: {
-                            DetailsPageView(viewModel: DetailsPageViewModel(movie: movie))
+                            DetailsPageView(viewModel: DetailsPageViewModel(modelContext: context, movie: movie))
                         }) {
                             ExtendedMovieCell(
                                 movie: movie,

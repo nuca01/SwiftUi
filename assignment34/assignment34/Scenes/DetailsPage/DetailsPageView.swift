@@ -11,14 +11,6 @@ import SwiftData
 struct DetailsPageView: View {
     //MARK: - Properties
     @ObservedObject private var viewModel: DetailsPageViewModel
-    @Environment(\.modelContext) var context
-    @Query var movies: [Movie]
-    
-    var isFavorite: Bool {
-        movies.contains { movie in
-            movie.databaseID == viewModel.movie.databaseID
-        }
-    }
     
     var body: some View {
         VStack {
@@ -54,6 +46,9 @@ struct DetailsPageView: View {
             }
         }
         .navigationBarTitleDisplayMode(.large)
+        .onAppear() {
+            viewModel.fetchFromContext()
+        }
     }
     
     private var stars: some View {
@@ -126,22 +121,7 @@ struct DetailsPageView: View {
                 
                 Spacer()
                 
-                Button(action: {
-                    if isFavorite
-                    {
-                        context.delete(viewModel.movie)
-                    } else {
-                        context.insert(viewModel.movie)
-                    }
-                }) {
-                    if isFavorite {
-                        Image(systemName: "heart.fill")
-                            .foregroundStyle(Color.red)
-                    } else {
-                        Image(systemName: "heart")
-                            .foregroundStyle(Color.red)
-                    }
-                }
+                favoriteButton
             }
             
             Rectangle()
@@ -154,6 +134,15 @@ struct DetailsPageView: View {
             aboutText
         }
         .padding()
+    }
+    
+    private var favoriteButton: some View {
+        Button(action: {
+            viewModel.isFavorite ? viewModel.removeFromFavorites(): viewModel.addToFavorites()
+        }) {
+            Image(systemName: viewModel.isFavorite ? "heart.fill": "heart")
+                .foregroundStyle(Color.red)
+        }
     }
     
     private var aboutTitle: some View {
@@ -215,10 +204,24 @@ struct DetailsPageView: View {
     }
 }
 
-//#Preview {
-//    DetailsPageView(viewModel: DetailsPageViewModel(movie: Movie(posterPath: "/2uNW4WbgBXL25BAbXGLnLqX71Sw.jpg", title: "Venom", databaseID: 335983, voteAverage: 6.827, genreIds: [
-//        878,
-//        28
-//    ], releaseDate: "2018-09-28", backdropPath: "/VuukZLgaCrho2Ar8Scl9HtV3yD.jpg")))
-//    .modelContainer(for: Movie.self)
-//}
+#Preview {
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: Movie.self, configurations: config)
+
+    return DetailsPageView(viewModel: DetailsPageViewModel(
+        modelContext: ModelContext(container), 
+        movie: Movie(
+            posterPath: "/2uNW4WbgBXL25BAbXGLnLqX71Sw.jpg",
+            title: "Venom",
+            databaseID: 335983,
+            voteAverage: 6.827,
+            genreIds: [
+        878,
+        28
+    ], 
+            releaseDate: "2018-09-28",
+            backdropPath: "/VuukZLgaCrho2Ar8Scl9HtV3yD.jpg"
+        )
+    ))
+        .modelContainer(container)
+}
