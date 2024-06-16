@@ -1,0 +1,24 @@
+{
+  "originHash" : "3ff7246ed1a22122a86feedd332d2d48e29e77ff555b861fbcb8cc93b691b1be",
+  "pins" : [
+    {
+      "identity" : "imageservice",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nuca01/ImageService",
+      "state" : {
+        "branch" : "main",
+        "revision" : "91717489632e808c4a6f59ac05bc3c0facdfbb9b"
+      }
+    },
+    {
+      "identity" : "networkingservice",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nuca01/NetworkingService",
+      "state" : {
+        "branch" : "main",
+        "revision" : "a04ae75d703ce255f3c84278ecc54f89a6a1ec89"
+      }
+    }
+  ],
+  "version" : 3
+}
