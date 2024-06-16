@@ -8,50 +8,79 @@
 import UIKit
 import ImageService
 
-class ArticleCell: UITableViewCell {
-    private let titleLabel = UILabel()
-    private let titleTextField = UITextField ()
-    private let articleImageView = UIImageView()
+class NewsTableViewCell: UITableViewCell {
+    private var hostingController: UIHostingController<NewsRow>?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        articleImageView.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.adjustsFontForContentSizeCategory = true
-        articleImageView.contentMode = .scaleAspectFit
-        
-        
-        contentView.addSubview(articleImageView)
-        contentView.addSubview(titleLabel)
-        
-        NSLayoutConstraint.activate([
-            articleImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-            articleImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            articleImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            articleImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
-            articleImageView.widthAnchor.constraint(equalToConstant: 100),
-            articleImageView.heightAnchor.constraint(equalToConstant: 60),
-            
-            titleLabel.leadingAnchor.constraint(equalTo: articleImageView.trailingAnchor, constant: 10),
-            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-            titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
-        ])
-        
-        titleLabel.font = UIFont.systemFont(ofSize: 18)
-        titleLabel.numberOfLines = 0
+        setupViews()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with article: NewsItem) {
-        titleLabel.text = article.title
-        
-        ImageService.imageService.loadImageFromURL(article.imageUrl ?? "") { [weak self] image in
+    private func setupViews() {
+        if hostingController == nil {
+            // Initialize hosting controller with a placeholder NewsRow
+            hostingController = UIHostingController(rootView: NewsRow(newsItem: .constant(NewsItem(id: nil, title: nil, description: nil, url: nil, imageUrl: nil, publishedAt: nil, source: nil))))
+            guard let hostingController = hostingController else { return }
+            hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+            contentView.addSubview(hostingController.view)
             
-            self?.articleImageView.image = image
+            NSLayoutConstraint.activate([
+                hostingController.view.topAnchor.constraint(equalTo: contentView.topAnchor),
+                hostingController.view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+                hostingController.view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+                hostingController.view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
+            ])
         }
+    }
+    
+    func configure(with newsItem: Binding<NewsItem>) {
+        hostingController?.rootView = NewsRow(newsItem: newsItem)
+    }
+}
+
+import SwiftUI
+
+extension View {
+    @ViewBuilder func scaledFont(name: String = UIFont.systemFont(ofSize: 0).familyName, size: CGFloat, weight: Font.Weight = .regular) -> some View {
+      if #available(iOS 16.0, *) {
+         self
+              .font(.custom(name, size: size, relativeTo: .body))
+              .fontWeight(weight)
+      } else {
+         self
+          .font(
+            .custom(name, size: size, relativeTo: .body)
+            .weight(weight)
+          )
+      }
+    }
+}
+
+struct NewsRow: View {
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
+    @Binding var newsItem: NewsItem
+
+    var body: some View {
+        HStack {
+            AsyncImage(url: URL(string: newsItem.imageUrl ?? "")) { image in
+                image.resizable().aspectRatio(contentMode: .fill)
+            } placeholder: {
+                Color.gray
+            }
+            .frame(width: 150, height: 150)
+            .cornerRadius(8)
+            .padding()
+
+            Text(newsItem.title ?? "title unavailable")
+                .scaledFont(size: 15)
+                .lineLimit(nil)
+            
+            Spacer()
+        }
+        .padding(.vertical, 4)
     }
 }

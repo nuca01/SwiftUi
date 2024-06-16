@@ -44,7 +44,7 @@ struct ArticlesTableView: UIViewRepresentable {
         let tableView = UITableView()
         tableView.delegate = context.coordinator
         tableView.dataSource = context.coordinator
-        tableView.register(ArticleCell.self, forCellReuseIdentifier: "ArticleCell")
+        tableView.register(NewsTableViewCell.self, forCellReuseIdentifier: "NewsTableViewCell")
         tableView.rowHeight = UITableView.automaticDimension
         return tableView
     }
@@ -65,9 +65,9 @@ struct ArticlesTableView: UIViewRepresentable {
         }
         
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ArticleCell", for: indexPath) as! ArticleCell
-            let article = parent.viewModel.articles[indexPath.row]
-            cell.configure(with: article)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "NewsTableViewCell", for: indexPath) as! NewsTableViewCell
+            let newsItem = parent.$viewModel.articles[indexPath.row]
+            cell.configure(with: newsItem)
             return cell
         }
     }
