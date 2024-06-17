@@ -36,6 +36,9 @@ struct ArticlesView: View {
                     NewsDetailViewControllerRepresentable(newsItem: viewModel.selectedRow!)
                 }
             }
+            .onAppear(perform: {
+                isNextViewPresented = false
+            })
         }
     }
 }
