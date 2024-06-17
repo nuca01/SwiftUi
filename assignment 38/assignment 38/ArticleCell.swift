@@ -22,8 +22,16 @@ class NewsTableViewCell: UITableViewCell {
     
     private func setupViews() {
         if hostingController == nil {
-            // Initialize hosting controller with a placeholder NewsRow
-            hostingController = UIHostingController(rootView: NewsRow(newsItem: .constant(NewsItem(id: nil, title: nil, description: nil, url: nil, imageUrl: nil, publishedAt: nil, source: nil))))
+            hostingController = UIHostingController(rootView: NewsRow(newsItem: .constant(NewsItem(
+                id: nil,
+                title: nil,
+                description: nil,
+                url: nil,
+                imageUrl: nil,
+                publishedAt: nil,
+                source: nil
+            ))))
+            
             guard let hostingController = hostingController else { return }
             hostingController.view.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview(hostingController.view)
@@ -74,10 +82,11 @@ struct NewsRow: View {
             .frame(width: 150, height: 150)
             .cornerRadius(8)
             .padding()
-
+            .accessibilityLabel("image describing image")
             Text(newsItem.title ?? "title unavailable")
                 .scaledFont(size: 15)
                 .lineLimit(nil)
+                .accessibilityLabel(newsItem.title ?? "title unavailable")
             
             Spacer()
         }

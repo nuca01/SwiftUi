@@ -13,18 +13,29 @@ import UIKit
 struct ArticlesView: View {
     @Environment(\.dynamicTypeSize) var dynamicTypeSize
     @StateObject private var viewModel = ArticlesViewModel()
+    @State private var isNextViewPresented = false
     
     var body: some View {
-        VStack {
-            Text("Articles")
-                .font(.largeTitle)
-                .padding()
-            
-            ArticlesTableView(viewModel: viewModel)
-                .minimumScaleFactor(dynamicTypeSize > DynamicTypeSize.large ? 10 : 0.3)
-                .onAppear {
-                    viewModel.fetchArticles()
+        NavigationStack {
+            VStack {
+                Text("Articles")
+                    .font(.largeTitle)
+                    .padding()
+                
+                ArticlesTableView(viewModel: viewModel)
+                    .minimumScaleFactor(dynamicTypeSize > DynamicTypeSize.large ? 10 : 0.3)
+                    .onAppear {
+                        viewModel.fetchArticles()
+                    }
+            }
+            .onChange(of: viewModel.selectedRow?.id) { _, _ in
+                isNextViewPresented = true
+            }
+            .navigationDestination(isPresented: $isNextViewPresented) {
+                if isNextViewPresented {
+                    NewsDetailViewControllerRepresentable(newsItem: viewModel.selectedRow!)
                 }
+            }
         }
     }
 }
@@ -69,6 +80,10 @@ struct ArticlesTableView: UIViewRepresentable {
             let newsItem = parent.$viewModel.articles[indexPath.row]
             cell.configure(with: newsItem)
             return cell
+        }
+        
+        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            parent.viewModel.selectedRow = parent.viewModel.articles[indexPath.row]
         }
     }
 }
