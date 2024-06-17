@@ -1,51 +1,13 @@
 //
-//  ArticlesView.swift
+//  ArticlesTableView.swift
 //  assignment 38
 //
-//  Created by nuca on 16.06.24.
+//  Created by nuca on 17.06.24.
 //
 
 import Foundation
-
-import SwiftUI
 import UIKit
-
-struct ArticlesView: View {
-    @Environment(\.dynamicTypeSize) var dynamicTypeSize
-    @StateObject private var viewModel = ArticlesViewModel()
-    @State private var isNextViewPresented = false
-    @State var selectedRow: NewsItem = NewsItem(id: nil, title: nil, description: nil, url: nil, imageUrl: nil, publishedAt: nil, source: nil)
-    
-    var body: some View {
-        NavigationStack {
-            VStack {
-                Text("Articles")
-                    .font(.largeTitle)
-                    .padding()
-                
-                ArticlesTableView(viewModel: viewModel)
-                    .minimumScaleFactor(dynamicTypeSize > DynamicTypeSize.large ? 10 : 0.3)
-                    .onAppear {
-                        viewModel.fetchArticles()
-                    }
-            }
-            .onChange(of: viewModel.selectedRow?.id) { _, newValue in
-                isNextViewPresented = true
-                selectedRow = viewModel.selectedRow!
-            }
-            .navigationDestination(isPresented: $isNextViewPresented) {
-                NewsDetailViewControllerRepresentable(newsItem: $selectedRow)
-            }
-            .onAppear(perform: {
-                isNextViewPresented = false
-            })
-        }
-    }
-}
-
-#Preview {
-    ArticlesView()
-}
+import SwiftUI
 
 struct ArticlesTableView: UIViewRepresentable {
     @ObservedObject var viewModel: ArticlesViewModel
