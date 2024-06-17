@@ -14,6 +14,7 @@ struct ArticlesView: View {
     @Environment(\.dynamicTypeSize) var dynamicTypeSize
     @StateObject private var viewModel = ArticlesViewModel()
     @State private var isNextViewPresented = false
+    @State var selectedRow: NewsItem = NewsItem(id: nil, title: nil, description: nil, url: nil, imageUrl: nil, publishedAt: nil, source: nil)
     
     var body: some View {
         NavigationStack {
@@ -28,13 +29,12 @@ struct ArticlesView: View {
                         viewModel.fetchArticles()
                     }
             }
-            .onChange(of: viewModel.selectedRow?.id) { _, _ in
+            .onChange(of: viewModel.selectedRow?.id) { _, newValue in
                 isNextViewPresented = true
+                selectedRow = viewModel.selectedRow!
             }
             .navigationDestination(isPresented: $isNextViewPresented) {
-                if isNextViewPresented {
-                    NewsDetailViewControllerRepresentable(newsItem: viewModel.selectedRow!)
-                }
+                NewsDetailViewControllerRepresentable(newsItem: $selectedRow)
             }
             .onAppear(perform: {
                 isNextViewPresented = false

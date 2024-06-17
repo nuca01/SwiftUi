@@ -13,7 +13,7 @@ class ArticlesViewModel: ObservableObject {
     @Published var selectedRow: NewsItem? = nil
     
     func fetchArticles() {
-        NetworkService.networkService.getData(urlString: "https://api.thenewsapi.com/v1/news/all?api_token=8ZpZpxsbcluNgC5aluWY32g3Zo6SW4eD0y2OUJ2Q&language=en&limit=3") { (result: Result<NewsResponse, Error>) in
+        NetworkService.networkService.getData(urlString: "https://api.thenewsapi.com/v1/news/all?api_token=j7DHGjZEFOUTzxyPhf15j2Dr9CFDRj8XAEWKPS4m&language=en&limit=3") { (result: Result<NewsResponse, Error>) in
             switch result {
             case .success(let data):
                 self.articles = data.data

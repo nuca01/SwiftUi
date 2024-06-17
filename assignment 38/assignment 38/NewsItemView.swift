@@ -142,10 +142,12 @@ import SwiftUI
 
 struct NewsDetailViewControllerRepresentable: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: NewsDetailViewController, context: Context) {
-        //update wont happen
+        uiViewController.newsItem = newsItem
+        uiViewController.viewDidLoad()
+        uiViewController.viewDidLayoutSubviews()
     }
     
-    var newsItem: NewsItem
+    @Binding var newsItem: NewsItem
     
     func makeUIViewController(context: Context) -> NewsDetailViewController {
         let viewController = NewsDetailViewController()
